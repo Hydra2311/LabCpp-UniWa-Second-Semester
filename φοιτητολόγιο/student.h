@@ -161,7 +161,7 @@ Student& Student::operator -()
 
 void Student::SetAM(const char *word)
 {
-	if (AM == word) return;
+	if (strcmp(AM,word) == 0) return;
 
 	delete[] AM;
 	int size = strlen(word);

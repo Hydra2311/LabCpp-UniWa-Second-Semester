@@ -7,7 +7,24 @@
 
 int main()
 {
-    Teacher Theo("Theodore",'M',"175","Cool");
+    cout << "\n======Δοκιμή Teacher Constructor=======\n" << endl;
+    Teacher Theo("Theodore",'M',"175","Math");
+    Theo.Print(cout);
+
+    cout << "\n=======Δοκιμή Teacher Setter/Getter=======\n" << endl;
+    Teacher George("George",'M',"330","History");
+
+    George.SetCode("22"); George.SetName("Georgi");
+	George.SetMF('F'); George.SetSpecial("Tourism");
+
+    George.Print(cout);
+
+	const char *codex = George.GetCode();
+	string	NameSure = George.GetName();
+	char mf_ = George.GetMF();
+	string specialty = George.GetSpecial();
+
+    cout << "Code: " << codex << " Name/Surname: " << NameSure << " M/F: " << mf_ << " Specialty: " << specialty << endl;
 
     int const n(5);
 	Student *class1A;
