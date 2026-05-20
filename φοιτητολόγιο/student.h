@@ -12,12 +12,10 @@ class Student : public Person
 {
 private:
 	char *AM;
-	string nameSurname;
-	char m_f;
 	unsigned int Semester;
 public:
-	Student (const char *,const string);
-	Student (const char *,const string,char,unsigned int);
+	Student (const char *,const string &);
+	Student (const char *,const string &,char,unsigned int);
 	Student (const Student &);
 	~Student();
 
@@ -30,16 +28,13 @@ public:
 	Student& operator -();
 
 	void SetAM(const char *);
-	void SetName(const string);
-	void SetMF(const char);
 	void SetSem(const unsigned int);
+
 	const char * GetAM() const;
-	string GetName() const;
-	char GetMF() const;
 	unsigned int GetSem() const;
 };
 
-Student::Student (const char *am,const string name)
+Student::Student (const char *am,const string &name) : Person(name,'-')
 {
 	int sizeam = strlen(am);
 
@@ -53,11 +48,12 @@ Student::Student (const char *am,const string name)
 		AM = nullptr;
 	}
 
-    nameSurname = name;
 	Semester = 1;
+
+    cout << "Student Half Con" << endl;
 }
 
-Student::Student (const char *am,const string name,char mf,unsigned int sem)
+Student::Student (const char *am,const string &name,char mf,unsigned int sem) : Person(name,mf)
 {
     int sizeam = strlen(am);
 
@@ -71,34 +67,36 @@ Student::Student (const char *am,const string name,char mf,unsigned int sem)
 		AM = nullptr;
 	}
 
-	nameSurname = name;
-	m_f = mf;
 	Semester = sem;
+
+    cout << "Student Full Con" << endl;
 }
 
-Student::Student (const Student &stud)
+Student::Student (const Student &stud) : Person(stud.GetName(),stud.GetMF())
 {
-	m_f = stud.m_f;
 	Semester = stud.Semester;
-	nameSurname = stud.nameSurname;
 
 	int sizeam = strlen(stud.AM);
 
 	AM = new char [sizeam + 1];
 	memcpy(AM,stud.AM,sizeam+1);
+
+    cout << "Student Copy Con" << endl;
 }
 
 Student::~Student()
 {
 	delete[] AM;
+
+    cout << "Student Des" << endl;
 }
 
 void Student::Print(ostream &x) const
 {
-	const char *namesur = nameSurname.c_str();
+	const char *namesur = this->GetName().c_str();
 	int sizename = strlen(namesur);
 
-	x << "AM: " << AM << " Name/Surname: " << nameSurname << " M/F: " << m_f << " Semester: " << Semester << "||| (Size: " << sizename << ")" << endl;
+	x << "AM: " << AM << " Name/Surname: " << this->GetName() << " M/F: " << this->GetMF() << " Semester: " << Semester << "||| (Size: " << sizename << ")" << endl;
 }
 
 Student& Student::operator =(const Student &stud)
@@ -111,8 +109,8 @@ Student& Student::operator =(const Student &stud)
 	AM = new char[sizeam + 1];
 	memcpy (AM, stud.AM, sizeam+1);
 
-	nameSurname = stud.nameSurname;
-	m_f = stud.m_f;
+	this->SetName(stud.GetName());
+	this->SetMF(stud.GetMF());
 	Semester = stud.Semester;
 
 	return *this;
@@ -150,10 +148,13 @@ Student& Student::operator -=(unsigned int x)
 
 Student& Student::operator -()
 {
-	if (m_f == 'M')
-		m_f = 'F';
-	else if (m_f == 'F')
-		m_f = 'M';
+    char mf = this->GetMF();
+	if (mf == 'M')
+		mf = 'F';
+	else if (mf == 'F')
+		mf = 'M';
+
+    this->SetMF(mf);
 
 	return *this;
 }
@@ -168,16 +169,6 @@ void Student::SetAM(const char *word)
 	strcpy(AM,word);
 }
 
-void Student::SetName(const string name)
-{
-	 nameSurname = name;
-}
-
-void Student::SetMF(const char k)
-{
-	m_f = k;
-}
-
 void Student::SetSem(unsigned int sem)
 {
 	Semester = sem;
@@ -186,16 +177,6 @@ void Student::SetSem(unsigned int sem)
 const char * Student::GetAM() const
 {
 	return AM;
-}
-
-string Student::GetName() const
-{
-	return nameSurname;
-}
-
-char Student::GetMF() const
-{
-	return m_f;
 }
 
 unsigned int Student::GetSem() const
