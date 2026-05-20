@@ -6,6 +6,6 @@
 
 int main()
 {
-    Teacher Theo("Theodore",'M',"25390175","Cool");
+    Teacher Theo("Theodore",'M',"175","Cool");
     return 0;
 }
