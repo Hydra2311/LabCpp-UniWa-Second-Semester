@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <list>
+#include "subject.h"
 
 using namespace std;
 
@@ -11,16 +13,30 @@ class Person
 private:
 	string nameSurname;
 	char m_f; 
+    list <Subject> Subjects;
 public:
-    Person(const string &x, char mf) : nameSurname(x), m_f(mf){cout << "Person Con" << endl;};
+    Person(const string &x, char mf,list <Subject> List) : nameSurname(x), m_f(mf),Subjects(List){cout << "Person Con" << endl;};
     ~Person(){cout << "Person Des" << endl;};
+
+    virtual void ListPrint(ostream &);
+    ostream& operator <<(list <Subject>);
 
     string GetName() const;
     char GetMF() const;
+    const list <Subject> & GetList() const;
 
     void SetName(const string);
 	void SetMF(const char);
 };
+
+void Person::ListPrint(ostream &x)
+{
+    list <Subject>::iterator il;
+    for(il = Subjects.begin();il != Subjects.end();il++)
+    {
+        il -> SubPrint(x);
+    }
+}
 
 string Person::GetName() const
 {
@@ -30,6 +46,11 @@ string Person::GetName() const
 char Person::GetMF() const
 {
 	return m_f;
+}
+
+const list <Subject> & Person::GetList() const
+{
+    return Subjects;
 }
 
 void Person::SetName(const string name)

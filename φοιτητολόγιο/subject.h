@@ -10,13 +10,15 @@ using namespace std;
 class Subject
 {
 private:
-    char *Subcode;
+    string Subcode;
     string Descript;
     int TeachSem;
     string Head;
 public:
-    Subject(const char *,const string &,const int,const string &);
+    Subject(const string &,const string &,const int,const string &);
     ~Subject();
+
+    void SubPrint(ostream &) const;
 
     void setSub(const char *);
     void setDes(const string &);
@@ -29,12 +31,9 @@ public:
     string getHead() const;
 };
 
-Subject::Subject(const char *sub,const string &des,const int sem,const string &head)
+Subject::Subject(const string &sub,const string &des,const int sem,const string &head)
 {
-    int size = strlen(sub);
-    Subcode = new char[size+1];
-    strcpy(Subcode,sub);
-
+    Subcode = sub;
     Descript = des;
     TeachSem = sem;
     Head = head;
@@ -42,7 +41,12 @@ Subject::Subject(const char *sub,const string &des,const int sem,const string &h
 
 Subject::~Subject()
 {
-    delete[] Subcode;
+
+}
+
+void Subject::SubPrint(ostream &x) const
+{
+    x << "Code: " << Subcode << " Description: " << Descript << " Semester: " << TeachSem << " Υπεύθυνος μαθήματος: " << Head << endl;
 }
 
 #endif

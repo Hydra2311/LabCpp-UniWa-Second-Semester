@@ -1,18 +1,35 @@
 #include "person.h"
 #include "teacher.h"
 #include "student.h"
+#include "subject.h"
 #include <iostream>
 #include <string>
 #include <cstring>
 
 int main()
 {
+    cout << "\n======Δοκιμή Λίστας=======\n" << endl;
+    list <Subject> l;
+    list <Subject>::iterator il;
+
+    Subject v1("888","Action",3,"Thodoris");
+    Subject v2("373","History",4,"Μιχάλης");
+
+    l.push_back (v1);
+    l.push_back (v2);
+
+    Person Tommy("Thomas",'M',l);
+
+	Tommy.ListPrint(cout);
+
     cout << "\n======Δοκιμή Teacher Constructor=======\n" << endl;
-    Teacher Theo("Theodore",'M',"175","Math");
-    Theo.Print(cout);
+    Teacher Theo("Theodore",'M',"175","Math",l);
+	Theo.Print(cout);
+
+    
 
     cout << "\n=======Δοκιμή Teacher Setter/Getter=======\n" << endl;
-    Teacher George("George",'M',"330","History");
+    Teacher George("George",'M',"330","History",l);
 
     George.SetCode("22"); George.SetName("Georgi");
 	George.SetMF('F'); George.SetSpecial("Tourism");
@@ -30,11 +47,11 @@ int main()
 	Student *class1A;
 	class1A = new Student[n]
 	{
-		Student("23475","Βαγγέλης Χαμπέας"),
-		Student("31534","Cornelius Roger",'M',5),
-		Student("18554","Τάκης Νουτρέας",'M',7),
-		Student("87348","Jenny Smoky",'F',4),
-		Student("67389","Ελένη Λίγκου",'F',2)
+		Student("23475","Βαγγέλης Χαμπέας",l),
+		Student("31534","Cornelius Roger",'M',5,l),
+		Student("18554","Τάκης Νουτρέας",'M',7,l),
+		Student("87348","Jenny Smoky",'F',4,l),
+		Student("67389","Ελένη Λίγκου",'F',2,l)
 	};
 
 	cout << "====Δοκιμή Parameter Constructor====\n" << endl;

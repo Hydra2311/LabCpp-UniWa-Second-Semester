@@ -14,12 +14,13 @@ private:
 	char *AM;
 	unsigned int Semester;
 public:
-	Student (const char *,const string &);
-	Student (const char *,const string &,char,unsigned int);
+	Student (const char *,const string &,list <Subject>);
+	Student (const char *,const string &,char,unsigned int,list <Subject>);
 	Student (const Student &);
 	~Student();
 
 	void Print(ostream &) const;
+	void ListPrint(ostream &) const;
 	Student& operator =(const Student &);
 	Student operator ++(int);
 	Student& operator ++();
@@ -34,7 +35,7 @@ public:
 	unsigned int GetSem() const;
 };
 
-Student::Student (const char *am,const string &name) : Person(name,'-')
+Student::Student (const char *am,const string &name,list <Subject> l) : Person(name,'-',l)
 {
 	int sizeam = strlen(am);
 
@@ -53,7 +54,7 @@ Student::Student (const char *am,const string &name) : Person(name,'-')
     cout << "Student Half Con" << endl;
 }
 
-Student::Student (const char *am,const string &name,char mf,unsigned int sem) : Person(name,mf)
+Student::Student (const char *am,const string &name,char mf,unsigned int sem,list <Subject> l) : Person(name,mf,l)
 {
     int sizeam = strlen(am);
 
@@ -72,7 +73,7 @@ Student::Student (const char *am,const string &name,char mf,unsigned int sem) : 
     cout << "Student Full Con" << endl;
 }
 
-Student::Student (const Student &stud) : Person(stud.GetName(),stud.GetMF())
+Student::Student (const Student &stud) : Person(stud.GetName(),stud.GetMF(),stud.GetList())
 {
 	Semester = stud.Semester;
 
@@ -97,6 +98,16 @@ void Student::Print(ostream &x) const
 	int sizename = strlen(namesur);
 
 	x << "AM: " << AM << " Name/Surname: " << this->GetName() << " M/F: " << this->GetMF() << " Semester: " << Semester << "||| (Size: " << sizename << ")" << endl;
+	this->ListPrint(cout);
+}
+
+void Student::ListPrint(ostream &x) const
+{
+    list <Subject>::const_iterator il;
+    for(il = this->GetList().begin();il != this->GetList().end();il++)
+    {
+        il -> SubPrint(x);
+    }
 }
 
 Student& Student::operator =(const Student &stud)

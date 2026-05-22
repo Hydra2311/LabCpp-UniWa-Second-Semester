@@ -14,11 +14,13 @@ private:
     char *code;
     string special;
 public:
-    Teacher (const string &,char ,const char *,const string &);
+    Teacher (const string &,char ,const char *,const string &,list <Subject>);
     ~Teacher();
 
     void SetCode(const char *);
     void SetSpecial(const string &);
+
+    void ListPrint(ostream &) const;
 
     char * GetCode() const;
     string GetSpecial() const;
@@ -26,7 +28,7 @@ public:
     void Print(ostream &) const;
 };
 
-Teacher::Teacher (const string &name,char mf,const char *cd,const string &spec) : Person(name,mf)
+Teacher::Teacher (const string &name,char mf,const char *cd,const string &spec,list <Subject> l) : Person(name,mf,l)
 {
     int size = strlen(cd);
     if (size)
@@ -64,6 +66,15 @@ void Teacher::SetSpecial(const string &spe)
     special = spe;
 }
 
+void Teacher::ListPrint(ostream &x) const
+{
+    list <Subject>::const_iterator il;
+    for(il = this->GetList().begin();il != this->GetList().end();il++)
+    {
+        il -> SubPrint(x);
+    }
+}
+
 char * Teacher::GetCode() const
 {
     return code;
@@ -77,6 +88,8 @@ string Teacher::GetSpecial() const
 void Teacher::Print(ostream &x) const
 {
 	x << "Code: " << code << " Name/Surname: " << this->GetName() << " M/F: " << this->GetMF() << " Specialty: " << special << endl;
+   
+    this->ListPrint(cout);
 }
 
 #endif
