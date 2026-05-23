@@ -15,11 +15,12 @@ private:
 	char m_f; 
     list <Subject> Subjects;
 public:
-    Person(const string &x, char mf,list <Subject> List) : nameSurname(x), m_f(mf),Subjects(List){cout << "Person Con" << endl;};
+    Person(const string &x, char mf,const list <Subject> & List) : nameSurname(x), m_f(mf),Subjects(List){cout << "Person Con" << endl;};
     ~Person(){cout << "Person Des" << endl;};
 
     virtual void ListPrint(ostream &);
-    ostream& operator <<(list <Subject>);
+
+    virtual void AddSubject(const string &,const string &,const int,const string &);
 
     string GetName() const;
     char GetMF() const;
@@ -36,6 +37,11 @@ void Person::ListPrint(ostream &x)
     {
         il -> SubPrint(x);
     }
+}
+
+void AddSubject(const string &,const string &,const int,const string &)
+{
+    
 }
 
 string Person::GetName() const
@@ -64,8 +70,6 @@ void Person::SetMF(const char k)
 }
 
 #endif
-
-
 
 
 

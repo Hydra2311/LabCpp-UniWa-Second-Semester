@@ -14,13 +14,15 @@ private:
     char *code;
     string special;
 public:
-    Teacher (const string &,char ,const char *,const string &,list <Subject>);
+    Teacher (const string &,char ,const char *,const string &,const list <Subject> &);
+    Teacher (const Teacher &);
     ~Teacher();
 
     void SetCode(const char *);
     void SetSpecial(const string &);
 
     void ListPrint(ostream &) const;
+    void AddSubject(const string &,const string &,const int,const string &);
 
     char * GetCode() const;
     string GetSpecial() const;
@@ -28,7 +30,7 @@ public:
     void Print(ostream &) const;
 };
 
-Teacher::Teacher (const string &name,char mf,const char *cd,const string &spec,list <Subject> l) : Person(name,mf,l)
+Teacher::Teacher (const string &name,char mf,const char *cd,const string &spec,const list <Subject> &l) : Person(name,mf,l)
 {
     int size = strlen(cd);
     if (size)
@@ -43,6 +45,15 @@ Teacher::Teacher (const string &name,char mf,const char *cd,const string &spec,l
 
     special = spec;
     cout << "Teacher Con" << endl;
+}
+
+Teacher::Teacher(const Teacher &teach) : Person(teach.GetName(),teach.GetMF(),teach.GetList())
+{
+    int size = strlen(teach.code);
+    code = new char[size+1];
+    memcpy(code,teach.code,size+1);
+
+    special = teach.special;
 }
 
 Teacher::~Teacher()

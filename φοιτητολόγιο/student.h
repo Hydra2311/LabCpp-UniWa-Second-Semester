@@ -14,8 +14,8 @@ private:
 	char *AM;
 	unsigned int Semester;
 public:
-	Student (const char *,const string &,list <Subject>);
-	Student (const char *,const string &,char,unsigned int,list <Subject>);
+	Student (const char *,const string &,const list <Subject> &);
+	Student (const char *,const string &,char,unsigned int,const list <Subject> &);
 	Student (const Student &);
 	~Student();
 
@@ -28,6 +28,8 @@ public:
 	Student& operator -=(unsigned int);
 	Student& operator -();
 
+	void AddSubject(const string &,const string &,const int,const string &);
+
 	void SetAM(const char *);
 	void SetSem(const unsigned int);
 
@@ -35,7 +37,7 @@ public:
 	unsigned int GetSem() const;
 };
 
-Student::Student (const char *am,const string &name,list <Subject> l) : Person(name,'-',l)
+Student::Student (const char *am,const string &name,const list <Subject> &l) : Person(name,'-',l)
 {
 	int sizeam = strlen(am);
 
@@ -54,7 +56,7 @@ Student::Student (const char *am,const string &name,list <Subject> l) : Person(n
     cout << "Student Half Con" << endl;
 }
 
-Student::Student (const char *am,const string &name,char mf,unsigned int sem,list <Subject> l) : Person(name,mf,l)
+Student::Student (const char *am,const string &name,char mf,unsigned int sem,const list <Subject> &l) : Person(name,mf,l)
 {
     int sizeam = strlen(am);
 
