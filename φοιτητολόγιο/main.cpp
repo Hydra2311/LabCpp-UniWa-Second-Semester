@@ -12,7 +12,7 @@ int main()
     list <Subject> l;
     list <Subject>::iterator il;
 
-    Subject v1("888","Action",3,"Thodoris");
+    Subject v1("888","Action",3,"Θοδωρής");
     Subject v2("373","History",4,"Μιχάλης");
 
     l.push_back (v1);
@@ -22,11 +22,17 @@ int main()
 
 	Tommy.ListPrint(cout);
 
+	Tommy.AddSubject("3536","Science",6,"Κώστας");
+	
+	Tommy.ListPrint(cout);
+
     cout << "\n======Δοκιμή Teacher Constructor=======\n" << endl;
     Teacher Theo("Theodore",'M',"175","Math",l);
 	Theo.Print(cout);
 
-    
+	Theo.AddSubject("3536","Science",6,"Κώστας");
+
+	Theo.Print(cout);
 
     cout << "\n=======Δοκιμή Teacher Setter/Getter=======\n" << endl;
     Teacher George("George",'M',"330","History",l);
@@ -54,9 +60,12 @@ int main()
 		Student("67389","Ελένη Λίγκου",'F',2,l)
 	};
 
+
 	cout << "====Δοκιμή Parameter Constructor====\n" << endl;
 
 	class1A[0].SetMF('M');
+
+	class1A[1].AddSubject("3536","Science",6,"Κώστας");
 
 	for(int i=0;i<n;i++)
 	{

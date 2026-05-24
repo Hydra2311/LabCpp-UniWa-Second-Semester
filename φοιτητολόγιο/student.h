@@ -21,14 +21,14 @@ public:
 
 	void Print(ostream &) const;
 	void ListPrint(ostream &) const;
+    void AddSub(const string &,const string &,const int,const string &);
+
 	Student& operator =(const Student &);
 	Student operator ++(int);
 	Student& operator ++();
 	Student& operator +=(unsigned int);
 	Student& operator -=(unsigned int);
 	Student& operator -();
-
-	void AddSubject(const string &,const string &,const int,const string &);
 
 	void SetAM(const char *);
 	void SetSem(const unsigned int);
@@ -112,6 +112,11 @@ void Student::ListPrint(ostream &x) const
     }
 }
 
+void Student::AddSub(const string &sub,const string &des,const int sem,const string &head)
+{
+    this->AddSubject(sub,des,sem,head);
+}
+
 Student& Student::operator =(const Student &stud)
 {
 	if (this == &stud)
@@ -171,6 +176,8 @@ Student& Student::operator -()
 
 	return *this;
 }
+
+
 
 void Student::SetAM(const char *word)
 {

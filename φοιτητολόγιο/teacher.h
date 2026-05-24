@@ -22,7 +22,7 @@ public:
     void SetSpecial(const string &);
 
     void ListPrint(ostream &) const;
-    void AddSubject(const string &,const string &,const int,const string &);
+    void AddSub(const string &,const string &,const int,const string &);
 
     char * GetCode() const;
     string GetSpecial() const;
@@ -84,6 +84,11 @@ void Teacher::ListPrint(ostream &x) const
     {
         il -> SubPrint(x);
     }
+}
+
+void Teacher::AddSub(const string &sub,const string &des,const int sem,const string &head)
+{
+    this->AddSubject(sub,des,sem,head);
 }
 
 char * Teacher::GetCode() const
