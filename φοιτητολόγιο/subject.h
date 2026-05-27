@@ -7,15 +7,17 @@
 
 using namespace std;
 
+class Teacher;
+
 class Subject
 {
 private:
     string Subcode;
     string Descript;
     int TeachSem;
-    string Head;
+    Teacher* Head;
 public:
-    Subject(const string &,const string &,const int,const string &);
+    Subject(const string &,const string &,const int,Teacher *);
     Subject(const Subject &);
     ~Subject();
 
@@ -24,15 +26,15 @@ public:
     void setSub(const string &);
     void setDes(const string &);
     void setSem(const int);
-    void setHead(const string &);
+    void setHead(Teacher *);
 
     string getSub() const;
     string getDes() const;
     int getSem() const;
-    string getHead() const;
+    Teacher * getHead() const;
 };
 
-Subject::Subject(const string &sub,const string &des,const int sem,const string &head)
+Subject::Subject(const string &sub,const string &des,const int sem,Teacher *head)
 {
     Subcode = sub;
     Descript = des;
@@ -53,11 +55,6 @@ Subject::~Subject()
 
 }
 
-void Subject::SubPrint(ostream &x) const
-{
-    x << "Code: " << Subcode << " Description: " << Descript << " Semester: " << TeachSem << " Υπεύθυνος μαθήματος: " << Head << endl;
-}
-
 void Subject::setSub(const string &sub)
 {
     Subcode = sub;
@@ -73,7 +70,7 @@ void Subject::setSem(const int sem)
     TeachSem = sem;
 }
 
-void Subject::setHead(const string &head)
+void Subject::setHead(Teacher *head)
 {
     Head = head;
 }
@@ -93,7 +90,7 @@ int Subject::getSem() const
     return TeachSem;
 }
 
-string Subject::getHead() const
+Teacher * Subject::getHead() const
 {
     return Head;
 }

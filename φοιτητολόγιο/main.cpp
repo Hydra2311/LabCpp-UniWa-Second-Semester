@@ -6,31 +6,50 @@
 #include <string>
 #include <cstring>
 
+void Subject::SubPrint(ostream &x) const
+{
+    x << "Code: " << Subcode << " Description: " << Descript << " Semester: " << TeachSem << " Υπεύθυνος μαθήματος: " << endl;
+    if (Head != nullptr) {
+        Head->Print(x);
+    } else {
+        x << "None" << endl;
+    }
+}
+
 int main()
 {
-    cout << "\n======Δοκιμή Λίστας=======\n" << endl;
-    list <Subject> l;
-    list <Subject>::iterator il;
+cout << "\n======Δοκιμή Λίστας=======\n" << endl;
+    
+    list<Subject> empty_list;
 
-    Subject v1("888","Action",3,"Θοδωρής");
-    Subject v2("373","History",4,"Μιχάλης");
-	Subject v3(v2);
+    Teacher t1("Θοδωρής", 'M', "T01", "Action Dept", empty_list);
+    Teacher t2("Μιχάλης", 'M', "T02", "History Dept", empty_list);
+    Teacher t3("Thomas", 'M', "T03", "Programming Dept", empty_list);
 
-	v3.setSub("73653");
-	v3.setDes("Programming");
-	v3.setSem(3);
-	v3.setHead("Thomas");
+    Subject v1("888", "Action", 3, &t1);
+    Subject v2("373", "History", 4, &t2);
+    Subject v3(v2); 
 
-    l.push_back (v1);
-    l.push_back (v2);
+    v3.setSub("73653");
+    v3.setDes("Programming");
+    v3.setSem(3);
+    v3.setHead(&t3); 
 
-    Person Tommy("Thomas",'M',l);
+    list<Subject> l;
+    list<Subject>::iterator il;
+    
+    l.push_back(v1);
+    l.push_back(v2);
 
-	Tommy.ListPrint(cout);
+    Person Tommy("Thomas", 'M', l);
 
-	Tommy.AddSubject(v3);
-	
-	Tommy.ListPrint(cout);
+    cout << "\n--- First Print ---" << endl;
+    Tommy.ListPrint(cout);
+
+    Tommy.AddSubject(v3);
+
+    cout << "\n--- Second Print (After adding v3) ---" << endl;
+    Tommy.ListPrint(cout);
 
     cout << "\n======Δοκιμή Teacher Constructor=======\n" << endl;
     Teacher Theo("Theodore",'M',"175","Math",l);
