@@ -14,6 +14,12 @@ int main()
 
     Subject v1("888","Action",3,"Θοδωρής");
     Subject v2("373","History",4,"Μιχάλης");
+	Subject v3(v2);
+
+	v3.setSub("73653");
+	v3.setDes("Programming");
+	v3.setSem(3);
+	v3.setHead("Thomas");
 
     l.push_back (v1);
     l.push_back (v2);
@@ -22,7 +28,7 @@ int main()
 
 	Tommy.ListPrint(cout);
 
-	Tommy.AddSubject("3536","Science",6,"Κώστας");
+	Tommy.AddSubject(v3);
 	
 	Tommy.ListPrint(cout);
 
@@ -35,7 +41,7 @@ int main()
 	Nikos = Theo;
 	Nikos.Print(cout);
 
-	Theo.AddSubject("3536","Science",6,"Κώστας");
+	Theo.AddSubject(v3);
 
 	Theo.Print(cout);
 
@@ -70,7 +76,7 @@ int main()
 
 	class1A[0].SetMF('M');
 
-	class1A[1].AddSubject("3536","Science",6,"Κώστας");
+	class1A[1].AddSubject(v3);
 
 	for(int i=0;i<n;i++)
 	{

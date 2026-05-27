@@ -5,6 +5,7 @@
 #include <string>
 #include <cstring>
 #include "person.h"
+#include "subject.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ public:
 
 	void Print(ostream &) const;
 	void ListPrint(ostream &) const;
-    void AddSub(const string &,const string &,const int,const string &);
+    void AddSub(const Subject &);
 
 	Student& operator =(const Student &);
 	Student operator ++(int);
@@ -112,9 +113,9 @@ void Student::ListPrint(ostream &x) const
     }
 }
 
-void Student::AddSub(const string &sub,const string &des,const int sem,const string &head)
+void Student::AddSub(const Subject &Sub)
 {
-    this->AddSubject(sub,des,sem,head);
+    this->AddSubject(Sub);
 }
 
 Student& Student::operator =(const Student &stud)

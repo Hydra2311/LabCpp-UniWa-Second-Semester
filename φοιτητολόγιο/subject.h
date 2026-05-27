@@ -16,6 +16,7 @@ private:
     string Head;
 public:
     Subject(const string &,const string &,const int,const string &);
+    Subject(const Subject &);
     ~Subject();
 
     void SubPrint(ostream &) const;
@@ -37,6 +38,14 @@ Subject::Subject(const string &sub,const string &des,const int sem,const string 
     Descript = des;
     TeachSem = sem;
     Head = head;
+}
+
+Subject::Subject(const Subject &Sub)
+{
+    Subcode = Sub.Subcode;
+    Descript = Sub.Descript;
+    TeachSem = Sub.TeachSem;
+    Head = Sub.Head;
 }
 
 Subject::~Subject()

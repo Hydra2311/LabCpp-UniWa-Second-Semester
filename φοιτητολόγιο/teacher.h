@@ -2,6 +2,7 @@
 #define TEACHER_H_
 
 #include "person.h"
+#include "subject.h"
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -22,7 +23,7 @@ public:
     void SetSpecial(const string &);
 
     void ListPrint(ostream &) const;
-    void AddSub(const string &,const string &,const int,const string &);
+    void AddSub(const Subject &);
 
     Teacher & operator = (Teacher &);
 
@@ -88,9 +89,9 @@ void Teacher::ListPrint(ostream &x) const
     }
 }
 
-void Teacher::AddSub(const string &sub,const string &des,const int sem,const string &head)
+void Teacher::AddSub(const Subject &Sub)
 {
-    this->AddSubject(sub,des,sem,head);
+    this->AddSubject(Sub);
 }
 
 Teacher & Teacher::operator =(Teacher &Teach)

@@ -20,7 +20,7 @@ public:
 
     virtual void ListPrint(ostream &);
 
-    void AddSubject(const string &,const string &,const int,const string &);
+    void AddSubject(const Subject &);
 
     string GetName() const;
     char GetMF() const;
@@ -41,11 +41,9 @@ void Person::ListPrint(ostream &x)
     }
 }
 
-void Person::AddSubject(const string &sub,const string &des,const int sem,const string &head)
+void Person::AddSubject(const Subject &Sub)
 {
-    Subject Added(sub,des,sem,head);
-
-    Subjects.push_back(Added);
+    Subjects.push_back(Sub);
 }
 
 string Person::GetName() const
