@@ -6,16 +6,6 @@
 #include <string>
 #include <cstring>
 
-void Subject::SubPrint(ostream &x) const
-{
-    x << "Code: " << Subcode << " Description: " << Descript << " Semester: " << TeachSem << " Υπεύθυνος μαθήματος: " << endl;
-    if (Head != nullptr) {
-        Head->Print(x);
-    } else {
-        x << "None" << endl;
-    }
-}
-
 int main()
 {
 cout << "\n======Δοκιμή Λίστας=======\n" << endl;
