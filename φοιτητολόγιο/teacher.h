@@ -24,6 +24,8 @@ public:
     void ListPrint(ostream &) const;
     void AddSub(const string &,const string &,const int,const string &);
 
+    Teacher & operator = (Teacher &);
+
     char * GetCode() const;
     string GetSpecial() const;
 
@@ -89,6 +91,25 @@ void Teacher::ListPrint(ostream &x) const
 void Teacher::AddSub(const string &sub,const string &des,const int sem,const string &head)
 {
     this->AddSubject(sub,des,sem,head);
+}
+
+Teacher & Teacher::operator =(Teacher &Teach)
+{
+    if (this == &Teach)
+        return *this;
+
+    delete[] code;
+    int size = strlen(Teach.code);
+    code = new char[size + 1];
+    memcpy(code,Teach.code,size+1);
+
+    special = Teach.special;
+
+    this->SetList(Teach.GetList());
+    this->SetName(Teach.GetName());
+	this->SetMF(Teach.GetMF());
+
+    return *this;
 }
 
 char * Teacher::GetCode() const

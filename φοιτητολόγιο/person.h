@@ -28,6 +28,8 @@ public:
 
     void SetName(const string);
 	void SetMF(const char);
+    void SetList(const list <Subject> &);
+
 };
 
 void Person::ListPrint(ostream &x)
@@ -69,6 +71,15 @@ void Person::SetName(const string name)
 void Person::SetMF(const char k)
 {
 	m_f = k;
+}
+
+void Person::SetList(const list <Subject> &lista)
+{
+    list <Subject> :: const_iterator i;
+    for(i=lista.begin();i != lista.end();i++)
+    {
+        Subjects.push_back(*i);
+    }
 }
 
 #endif

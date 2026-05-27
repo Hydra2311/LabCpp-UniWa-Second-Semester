@@ -30,6 +30,11 @@ int main()
     Teacher Theo("Theodore",'M',"175","Math",l);
 	Theo.Print(cout);
 
+	Teacher Nikos("Νίκος",'M',"5784","Math",l);
+	Nikos.Print(cout);
+	Nikos = Theo;
+	Nikos.Print(cout);
+
 	Theo.AddSubject("3536","Science",6,"Κώστας");
 
 	Theo.Print(cout);
