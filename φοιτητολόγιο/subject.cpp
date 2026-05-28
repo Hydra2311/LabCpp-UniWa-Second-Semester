@@ -11,6 +11,18 @@ void Subject::SubPrint(ostream &x) const
     }
 }
 
+Subject & Subject::operator=(const Subject &Sub)
+{
+    if (this == &Sub)
+    {
+        return *this;
+    }
+    this->setSub(Sub.getSub());
+    this->setHead(Sub.getHead());
+    this->setDes(Sub.getDes());
+    this->setSem(Sub.getSem());
+}
+
 Subject::Subject(const string &sub,const string &des,const int sem,Teacher *head)
 {
     Subcode = sub;

@@ -23,6 +23,8 @@ public:
 
     void SubPrint(ostream &) const;
 
+    Subject & operator =(const Subject &);
+
     void setSub(const string &);
     void setDes(const string &);
     void setSem(const int);

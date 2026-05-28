@@ -10,6 +10,11 @@ void Person::ListPrint(ostream &x)
     }
 }
 
+void Person::Print(ostream &x)
+{
+    x << "Useless" << endl;
+}
+
 void Person::AddSubject(const Subject &Sub)
 {
     Subjects.push_back(Sub);

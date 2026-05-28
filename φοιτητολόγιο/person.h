@@ -18,6 +18,7 @@ public:
     Person(const string &x, char mf,const list <Subject> & List) : nameSurname(x), m_f(mf),Subjects(List){cout << "Person Con" << endl;};
     ~Person(){cout << "Person Des" << endl;};
 
+    virtual void Print(ostream &);
     virtual void ListPrint(ostream &);
 
     void AddSubject(const Subject &);
@@ -33,6 +34,3 @@ public:
 };
 
 #endif
-
-
-

@@ -7,6 +7,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <iterator>
 
 using namespace std;
 
@@ -17,8 +18,22 @@ private:
     list<Subject> AllSub;
 public:
     Record(const vector<Person *> &People,const list<Subject> &Subjects) : Members(People),AllSub(Subjects){};
-    ~Record();
+    ~Record(){};
 
+    void AddPerson(Person *);
+    void AddSubject(const Subject &);
+
+    void PrintMemb(ostream &);
+    void PrintSub(ostream &);
+
+    void ChangeName(const char *,const string &); //Αλλάζει τον nameSurname με βάση τον κωδικό
+    void ChangeDesc(const string &,const string &);
+
+    void DeleteMember(const char *);
+    void DeleteSubject(const string &);
+
+    Person * SearchMember(const char *);
+    Subject * SearchSubject(const string &);
 };
 
 #endif
