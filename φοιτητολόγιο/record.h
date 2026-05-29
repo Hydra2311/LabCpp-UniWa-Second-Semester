@@ -34,6 +34,35 @@ public:
 
     Person * SearchMember(const char *);
     Subject * SearchSubject(const string &);
+
+    void EmailStudent(ostream &,const string &);
+    void EmailTeacher(ostream &,const string &);
+
+    void StudentOCSV();
+    void TeacherOCSV();
+
+    void SaveStudent()
+    {
+        try
+        {
+            StudentOCSV();
+        }
+        catch (int x)
+        {
+            cout << "Couldn't open file" << endl;
+        }
+    }
+    void SaveTeacher()
+    {
+        try
+        {
+            TeacherOCSV();
+        }
+        catch (int x)
+        {
+            cout << "Couldn't open file" << endl;
+        }
+    }
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "record.h"
 #include "student.h"
 #include "teacher.h"
+#include <fstream>
 
 void Record::AddPerson(Person *newly)
 {
@@ -145,4 +146,107 @@ Subject * Record::SearchSubject(const string &code)
     }    
 
     return nullptr;
+}
+
+void Record::EmailStudent(ostream &x,const string &message)
+{
+    for(int i = 0;i < Members.size();i++)
+    {
+        if (Student *estud = dynamic_cast<Student *>(Members[i]))
+        {
+            x << "Προς φοιτητή : " << estud->GetName() << "AM : " << estud->GetAM() << endl;
+            x << "Περιεχόμενο : " << message << endl;
+        }
+    }
+}
+
+void Record::EmailTeacher(ostream &x,const string &message)
+{
+    for(int i = 0;i < Members.size();i++)
+    {
+        if (Teacher *eteach = dynamic_cast<Teacher *>(Members[i]))
+        {
+            x << "Προς φοιτητή : " << eteach->GetName() << "AM : " << eteach->GetCode() << endl;
+            x << "Περιεχόμενο : " << message << endl;
+        }
+    }
+}
+
+void Record::StudentOCSV()
+{
+    ofstream stud("student.csv");
+
+    if (!stud.is_open())
+    {
+        throw 1;
+    }
+
+    for(int i = 0;i < Members.size();i++)
+    {
+        if (Student *estud = dynamic_cast<Student *>(Members[i]))
+        {
+            list <Subject> :: iterator l;
+            list <Subject> subList = estud->GetList();
+
+            if (subList.empty()) 
+            {
+                stud << estud->GetName() << ", " 
+                     << estud->GetAM() << ", "
+                     << estud->GetMF() << ", " 
+                     << estud->GetSem() 
+                     << ", NONE" << endl;
+            }
+            else 
+            {
+                for (l = subList.begin(); l != subList.end(); l++)
+                {
+                    stud << estud->GetName() << ", " 
+                         << estud->GetAM() << ", "
+                         << estud->GetMF() << ", " 
+                         << estud->GetSem() << ", "
+                         << l->getSub() << endl;
+                }
+            }
+        }
+    }
+}
+
+void Record::TeacherOCSV()
+{
+    ofstream teach("teacher.csv");
+
+    if (!teach.is_open())
+    {
+        throw 1;
+    }
+
+    for(int i = 0;i < Members.size();i++)
+    {
+        if (Teacher *eteach = dynamic_cast<Teacher *>(Members[i]))
+        {
+            list <Subject> :: iterator l;
+            list <Subject> subList = eteach->GetList();
+
+            if (subList.empty()) 
+            {
+                teach << eteach->GetName() << ", " 
+                      << eteach->GetCode() << ", "
+                      << eteach->GetMF() << ", " 
+                      << eteach->GetSpecial() 
+                      << ", NONE" << endl;
+            }
+            else 
+            {
+                for (l = subList.begin(); l != subList.end(); l++)
+                {
+                    teach << eteach->GetName() << ", " 
+                          << eteach->GetCode() << ", "
+                          << eteach->GetMF() << ", " 
+                          << eteach->GetSpecial() << ", "
+                          << l->getSub() << endl;
+                }
+            }
+
+        }
+    }
 }
