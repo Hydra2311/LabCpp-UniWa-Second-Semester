@@ -10,7 +10,7 @@ void Person::ListPrint(ostream &x)
     }
 }
 
-void Person::Print(ostream &x)
+void Person::Print(ostream &x) const
 {
     x << "Useless" << endl;
 }
@@ -47,9 +47,5 @@ void Person::SetMF(const char k)
 
 void Person::SetList(const list <Subject> &lista)
 {
-    list <Subject> :: const_iterator i;
-    for(i=lista.begin();i != lista.end();i++)
-    {
-        Subjects.push_back(*i);
-    }
+    this->Subjects = lista;
 }

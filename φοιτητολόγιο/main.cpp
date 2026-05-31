@@ -2,124 +2,182 @@
 #include "teacher.h"
 #include "student.h"
 #include "subject.h"
+#include "record.h"
 #include <iostream>
 #include <string>
 #include <cstring>
 
 int main()
 {
-cout << "\n======Δοκιμή Λίστας=======\n" << endl;
+    cout << "\n========================================" << endl;
+    cout << "Δοκιμή Subject/Person/Student/Teacher κλάσεων\n\n1. Αρχικοποίηση" << endl;
+    cout << "========================================" << endl;
     
     list<Subject> empty_list;
+    Teacher k1("Θοδωρής", 'M', "T01", "Action Dept", empty_list);
+    Teacher k2("Μιχάλης", 'M', "T02", "History Dept", empty_list);
+    Teacher k3("Thomas", 'M', "T03", "Programming Dept", empty_list);
 
-    Teacher t1("Θοδωρής", 'M', "T01", "Action Dept", empty_list);
-    Teacher t2("Μιχάλης", 'M', "T02", "History Dept", empty_list);
-    Teacher t3("Thomas", 'M', "T03", "Programming Dept", empty_list);
+    Subject v1("848", "Action", 3, &k1), v2("373", "History", 4, &k2), v3(v2); 
+    v3.setSub("73653"); v3.setDes("Programming"); v3.setSem(3); v3.setHead(&k3); 
 
-    Subject v1("888", "Action", 3, &t1);
-    Subject v2("373", "History", 4, &t2);
-    Subject v3(v2); 
-
-    v3.setSub("73653");
-    v3.setDes("Programming");
-    v3.setSem(3);
-    v3.setHead(&t3); 
-
-    list<Subject> l;
-    list<Subject>::iterator il;
-    
-    l.push_back(v1);
-    l.push_back(v2);
-
+    list<Subject> l = {v1, v2}; 
     Person Tommy("Thomas", 'M', l);
 
-    cout << "\n--- First Print ---" << endl;
+    cout << "\n========================================" << endl;
+    cout << "2. Πρώτη Εκτύπωση Subject" << endl;
+    cout << "========================================" << endl;
     Tommy.ListPrint(cout);
-
+    
     Tommy.AddSubject(v3);
-
-    cout << "\n--- Second Print (After adding v3) ---" << endl;
+    cout << "\n========================================" << endl;
+    cout << "3. Πρόσθεση Subject" << endl;
+    cout << "========================================" << endl;
     Tommy.ListPrint(cout);
 
-    cout << "\n======Δοκιμή Teacher Constructor=======\n" << endl;
-    Teacher Theo("Theodore",'M',"175","Math",l);
-	Theo.Print(cout);
+    cout << "\n========================================" << endl;
+    cout << "4. Teacher Constructor/Setters/Getters" << endl;
+    cout << "========================================" << endl;
 
-	Teacher Nikos("Νίκος",'M',"5784","Math",l);
-	Nikos.Print(cout);
-	Nikos = Theo;
-	Nikos.Print(cout);
-
-	Theo.AddSubject(v3);
-
-	Theo.Print(cout);
-
-    cout << "\n=======Δοκιμή Teacher Setter/Getter=======\n" << endl;
-    Teacher George("George",'M',"330","History",l);
-
-    George.SetCode("22"); George.SetName("Georgi");
-	George.SetMF('F'); George.SetSpecial("Tourism");
-
+    Teacher George("George", 'M', "330", "History", l);
+    George.SetCode("22"); George.SetName("Georgi"); George.SetMF('F'); George.SetSpecial("Tourism");
     George.Print(cout);
 
-	const char *codex = George.GetCode();
-	string	NameSure = George.GetName();
-	char mf_ = George.GetMF();
-	string specialty = George.GetSpecial();
+    cout << "Code: " << George.GetCode() << " Name/Surname: " << George.GetName() 
+         << " M/F: " << George.GetMF() << " Specialty: " << George.GetSpecial() << "\n";
 
-    cout << "Code: " << codex << " Name/Surname: " << NameSure << " M/F: " << mf_ << " Specialty: " << specialty << endl;
+    cout << "\n========================================" << endl;
+    cout << "5. Student Constructor/Getters/Setters" << endl;
+    cout << "========================================" << endl;
 
     int const n(5);
-	Student *class1A;
-	class1A = new Student[n]
-	{
-		Student("23475","Βαγγέλης Χαμπέας",l),
-		Student("31534","Cornelius Roger",'M',5,l),
-		Student("18554","Τάκης Νουτρέας",'M',7,l),
-		Student("87348","Jenny Smoky",'F',4,l),
-		Student("67389","Ελένη Λίγκου",'F',2,l)
-	};
+    Student* class1A = new Student[n] {
+        Student("23475", "Βαγγέλης Χαμπέας", l),
+        Student("31534", "Cornelius Roger", 'M', 5, l),
+        Student("18554", "Τάκης Νουτρέας", 'M', 7, l),
+        Student("87348", "Jenny Smoky", 'F', 4, l),
+        Student("67389", "Ελένη Λίγκου", 'F', 2, l)
+    };
+
+    class1A[0].SetMF('M'); 
+    class1A[1].AddSubject(v3);
+    for(int i = 0; i < n; i++) {class1A[i].Print(cout); cout << endl;}
+
+    cout << endl;
+
+    class1A[0]++; ++class1A[1]; class1A[2] += 3; class1A[3] -= 4; -class1A[4];
+
+    Student testcopy = class1A[4], getset = class1A[4];
+    getset.SetAM("22"); getset.SetName("Thomas Washignton"); getset.SetMF('F'); getset.SetSem(8);
+
+    for(int i = 0; i < n; i++) {class1A[i].Print(cout); cout << endl;}
+
+    cout << endl;
+
+    testcopy.Print(cout); 
+
+    cout << endl;
+
+    getset.Print(cout);
+    
+    cout << "AM: " << getset.GetAM() << " Name/Surname: " << getset.GetName() 
+         << " M/F: " << getset.GetMF() << " Semester: " << getset.GetSem() << "\n";
+
+    delete[] class1A;
+
+    cout << "\n========================================" << endl;
+    cout << "Λειτουργίες Κλάσεων Ολοκληρώθηκαν" << endl;
+    cout << "========================================" << endl;
+
+	cout << "========================================" << endl;
+    cout << "Λειτουργίες Record\n\n1. Αρχικοποίηση" << endl;
+    cout << "========================================" << endl;
+    
+    Record myRecord;
+    list<Subject> emptyList;
+
+    Teacher* t1 = new Teacher("Κύριος Γιώργος", 'M', "T01", "Μαθηματικά", emptyList);
+    Teacher* t2 = new Teacher("Dr. Stein", 'M', "T02", "Γλώσσα", emptyList);
+    myRecord.AddPerson(t1);
+    myRecord.AddPerson(t2);
+
+    Subject math("101", "Algebra", 1, t1);
+    Subject physics("102", "Physics", 2, t1);
+    myRecord.AddSubject(math);
+    myRecord.AddSubject(physics);
+
+    Student* s1 = new Student("12345", "Thomas", 'M', 3, emptyList);
+    s1->AddSubject(math);
+    s1->AddSubject(physics);
+    t2->AddSubject(math);
+    t2->AddSubject(physics);
+    myRecord.AddPerson(s1);
+
+    cout << "--- Τωρινά Members ---" << endl;
+    myRecord.PrintMemb(cout);
 
 
-	cout << "====Δοκιμή Parameter Constructor====\n" << endl;
-
-	class1A[0].SetMF('M');
-
-	class1A[1].AddSubject(v3);
-
-	for(int i=0;i<n;i++)
-	{
-		class1A[i].Print(cout);
-	}
-
-    cout << "\n====Δοκιμή Copy Constructor-Setter/Getter-Operators====\n" << endl;
-
-	class1A[0]++;
-	++class1A[1];
-	class1A[2] += 3;
-	class1A[3] -= 4;
-	-class1A[4];
-
-	Student testcopy = class1A[4];
-	Student getset = class1A[4];
-
-	getset.SetAM("22"); getset.SetName("Thomas Washignton");
-	getset.SetMF('F'); getset.SetSem(8);
-
-	const char *Am = getset.GetAM();
-	string	NameSur = getset.GetName();
-	char mf = getset.GetMF();
-	unsigned int Seme = getset.GetSem();
-
-    for(int i=0;i<n;i++)
-    {
-		class1A[i].Print(cout);
+    cout << "\n========================================" << endl;
+    cout << "2. Αποθήκευση σε CSV" << endl;
+    cout << "========================================" << endl;
+    try {
+        myRecord.StudentOCSV();
+        myRecord.TeacherOCSV();
+        cout << "Δημιουργήθηκαν τα student.csv και teacher.csv" << endl;
+    } 
+    catch (int x) {
+        cout << "Αδυναμία αποθήκευσης" << endl;
     }
-	testcopy.Print(cout);
-	getset.Print(cout);
-	cout << "AM: " << Am << " Name/Surname: " << NameSur << " M/F: " << mf << " Semester: " << Seme << "\n";
 
-	delete[] class1A;
 
-	return 0;
+    cout << "\n========================================" << endl;
+    cout << "3. Φόρτωση από CSV" << endl;
+    cout << "========================================" << endl;
+    
+    Record loadedRecord;
+    
+    loadedRecord.AddSubject(math);
+    loadedRecord.AddSubject(physics);
+
+    try {
+        loadedRecord.StudentICSV();
+        loadedRecord.TeacherICSV();
+        cout << "Τα αρχείαα φορτώθηκαν\n--- Τωρινά Members ---\n" << endl;
+        loadedRecord.PrintMemb(cout);
+    }
+    catch (int x) {
+        cout << "Αδυναμία φόρτωσης" << endl;
+    }
+
+    cout << "\n========================================" << endl;
+    cout << "4. Αλλαγή και Διαγραφή" << endl;
+    cout << "========================================" << endl;
+
+    cout << "Thomas σε Tommy" << endl;
+    loadedRecord.ChangeName("12345", "Tommy");
+    
+    cout << "Αλλαγή Subject 101 Description" << endl;
+    loadedRecord.ChangeDesc("101", "Advanced Algebra");
+
+    cout << "--- Members μετά τις αλλαγές ---" << endl;
+    loadedRecord.PrintMemb(cout);
+
+    cout << "\nΔιαγραφή κύριου Γιώργου" << endl;
+    loadedRecord.DeleteMember("T01");
+    
+    cout << "--- Members μετά τη διαγραφή ---" << endl;
+    loadedRecord.PrintMemb(cout);
+
+    cout << "\n========================================" << endl;
+    cout << "5. Δοκιμή Emails" << endl;
+    cout << "========================================" << endl;
+    
+    loadedRecord.EmailStudent(cout, "Ακύρωση του μαθήματος στις 17:00.");
+    loadedRecord.EmailTeacher(cout, "Συνάντηση καθηγητών στις 19:00");
+
+    cout << "\n========================================" << endl;
+    cout << "Λειτουργίες Record ολοκληρώθηκαν" << endl;
+    cout << "========================================" << endl;
+
+    return 0;
 }

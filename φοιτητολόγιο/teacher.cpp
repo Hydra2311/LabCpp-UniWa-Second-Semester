@@ -16,7 +16,6 @@ Teacher::Teacher (const string &name,char mf,const char *cd,const string &spec,c
     }
 
     special = spec;
-    cout << "Teacher Con" << endl;
 }
 
 Teacher::Teacher(const Teacher &teach) : Person(teach.GetName(),teach.GetMF(),teach.GetList())
@@ -31,7 +30,6 @@ Teacher::Teacher(const Teacher &teach) : Person(teach.GetName(),teach.GetMF(),te
 Teacher::~Teacher()
 {
     delete[] code;
-    cout << "Teacher Des" << endl;
 }
 
 void Teacher::SetCode (const char *cde)

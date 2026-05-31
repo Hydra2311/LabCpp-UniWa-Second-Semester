@@ -3,12 +3,7 @@
 
 void Subject::SubPrint(ostream &x) const
 {
-    x << "Code: " << Subcode << " Description: " << Descript << " Semester: " << TeachSem << " Υπεύθυνος μαθήματος: " << endl;
-    if (Head != nullptr) {
-        Head->Print(x);
-    } else {
-        x << "None" << endl;
-    }
+    x << "Code: " << Subcode << " Description: " << Descript << " Semester: " << TeachSem << " Υπεύθυνος μαθήματος: " << Head->GetName() << endl;
 }
 
 Subject & Subject::operator=(const Subject &Sub)
@@ -21,6 +16,8 @@ Subject & Subject::operator=(const Subject &Sub)
     this->setHead(Sub.getHead());
     this->setDes(Sub.getDes());
     this->setSem(Sub.getSem());
+
+    return *this;
 }
 
 Subject::Subject(const string &sub,const string &des,const int sem,Teacher *head)

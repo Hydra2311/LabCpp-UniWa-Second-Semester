@@ -15,10 +15,10 @@ private:
 	char m_f; 
     list <Subject> Subjects;
 public:
-    Person(const string &x, char mf,const list <Subject> & List) : nameSurname(x), m_f(mf),Subjects(List){cout << "Person Con" << endl;};
-    ~Person(){cout << "Person Des" << endl;};
+    Person(const string &x, char mf,const list <Subject> & List) : nameSurname(x), m_f(mf),Subjects(List){};
+    ~Person(){};
 
-    virtual void Print(ostream &);
+    virtual void Print(ostream &) const;
     virtual void ListPrint(ostream &);
 
     void AddSubject(const Subject &);

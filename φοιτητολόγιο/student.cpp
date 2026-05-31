@@ -16,8 +16,6 @@ Student::Student (const char *am,const string &name,const list <Subject> &l) : P
 	}
 
 	Semester = 1;
-
-    cout << "Student Half Con" << endl;
 }
 
 Student::Student (const char *am,const string &name,char mf,unsigned int sem,const list <Subject> &l) : Person(name,mf,l)
@@ -35,8 +33,6 @@ Student::Student (const char *am,const string &name,char mf,unsigned int sem,con
 	}
 
 	Semester = sem;
-
-    cout << "Student Full Con" << endl;
 }
 
 Student::Student (const Student &stud) : Person(stud.GetName(),stud.GetMF(),stud.GetList())
@@ -47,15 +43,11 @@ Student::Student (const Student &stud) : Person(stud.GetName(),stud.GetMF(),stud
 
 	AM = new char [sizeam + 1];
 	memcpy(AM,stud.AM,sizeam+1);
-
-    cout << "Student Copy Con" << endl;
 }
 
 Student::~Student()
 {
 	delete[] AM;
-
-    cout << "Student Des" << endl;
 }
 
 void Student::Print(ostream &x) const

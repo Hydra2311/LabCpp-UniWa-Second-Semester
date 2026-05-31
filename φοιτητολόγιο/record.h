@@ -18,6 +18,7 @@ private:
     list<Subject> AllSub;
 public:
     Record(const vector<Person *> &People,const list<Subject> &Subjects) : Members(People),AllSub(Subjects){};
+    Record(){};
     ~Record(){};
 
     void AddPerson(Person *);
@@ -53,6 +54,32 @@ public:
         }
     }
     void SaveTeacher()
+    {
+        try
+        {
+            TeacherOCSV();
+        }
+        catch (int x)
+        {
+            cout << "Couldn't open file" << endl;
+        }
+    }
+
+    void StudentICSV();
+    void TeacherICSV();
+
+    void LoadStudent()
+    {
+        try
+        {
+            StudentOCSV();
+        }
+        catch (int x)
+        {
+            cout << "Couldn't open file" << endl;
+        }
+    }
+    void LoadTeacher()
     {
         try
         {
