@@ -98,20 +98,33 @@ int main()
 
     Teacher* t1 = new Teacher("Κύριος Γιώργος", 'M', "T01", "Μαθηματικά", emptyList);
     Teacher* t2 = new Teacher("Dr. Stein", 'M', "T02", "Γλώσσα", emptyList);
+    Teacher* t3 = new Teacher("Κυρία Αναστασία", 'F', "T03", "Προγραμματισμός", emptyList);
     myRecord.AddPerson(t1);
     myRecord.AddPerson(t2);
+    myRecord.AddPerson(t3);
 
     Subject math("101", "Algebra", 1, t1);
     Subject physics("102", "Physics", 2, t1);
+    Subject python("103", "Python", 3, t2);
     myRecord.AddSubject(math);
     myRecord.AddSubject(physics);
+    myRecord.AddSubject(python);
 
     Student* s1 = new Student("12345", "Thomas", 'M', 3, emptyList);
+    Student* s2 = new Student("6789", "Νικολέτα", 'F', 3, emptyList);
+
     s1->AddSubject(math);
     s1->AddSubject(physics);
+    s2->AddSubject(python);
+
+    t1->AddSubject(math);
+    t1->AddSubject(python);
     t2->AddSubject(math);
     t2->AddSubject(physics);
+    t3->AddSubject(python);
+
     myRecord.AddPerson(s1);
+    myRecord.AddPerson(s2);
 
     cout << "--- Τωρινά Members ---" << endl;
     myRecord.PrintMemb(cout);
@@ -138,11 +151,12 @@ int main()
     
     loadedRecord.AddSubject(math);
     loadedRecord.AddSubject(physics);
+    loadedRecord.AddSubject(python);
 
     try {
         loadedRecord.StudentICSV();
         loadedRecord.TeacherICSV();
-        cout << "Τα αρχείαα φορτώθηκαν\n--- Τωρινά Members ---\n" << endl;
+        cout << "Τα αρχεία φορτώθηκαν\n--- Τωρινά Members ---\n" << endl;
         loadedRecord.PrintMemb(cout);
     }
     catch (int x) {

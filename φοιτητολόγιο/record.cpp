@@ -192,7 +192,7 @@ void Record::EmailTeacher(ostream &x,const string &message)
     {
         if (Teacher *eteach = dynamic_cast<Teacher *>(Members[i]))
         {
-            x << "Προς φοιτητή : " << eteach->GetName() << " AM : " << eteach->GetCode() << endl;
+            x << "Προς καθηγητή : " << eteach->GetName() << " Κωδικός : " << eteach->GetCode() << endl;
             x << "Περιεχόμενο : " << message << endl;
         }
     }

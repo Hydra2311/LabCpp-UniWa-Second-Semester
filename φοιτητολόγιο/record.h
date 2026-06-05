@@ -27,7 +27,7 @@ public:
     void PrintMemb(ostream &);
     void PrintSub(ostream &);
 
-    void ChangeName(const char *,const string &); //Αλλάζει τον nameSurname με βάση τον κωδικό
+    void ChangeName(const char *,const string &); 
     void ChangeDesc(const string &,const string &);
 
     void DeleteMember(const char *);
@@ -42,54 +42,8 @@ public:
     void StudentOCSV();
     void TeacherOCSV();
 
-    void SaveStudent()
-    {
-        try
-        {
-            StudentOCSV();
-        }
-        catch (int x)
-        {
-            cout << "Couldn't open file" << endl;
-        }
-    }
-    void SaveTeacher()
-    {
-        try
-        {
-            TeacherOCSV();
-        }
-        catch (int x)
-        {
-            cout << "Couldn't open file" << endl;
-        }
-    }
-
     void StudentICSV();
     void TeacherICSV();
-
-    void LoadStudent()
-    {
-        try
-        {
-            StudentOCSV();
-        }
-        catch (int x)
-        {
-            cout << "Couldn't open file" << endl;
-        }
-    }
-    void LoadTeacher()
-    {
-        try
-        {
-            TeacherOCSV();
-        }
-        catch (int x)
-        {
-            cout << "Couldn't open file" << endl;
-        }
-    }
 };
 
 #endif
