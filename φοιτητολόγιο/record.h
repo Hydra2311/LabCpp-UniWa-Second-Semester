@@ -44,6 +44,9 @@ public:
 
     void StudentICSV();
     void TeacherICSV();
+
+    vector <Person *> GetMembers();
+    list <Subject> GetSubjects();
 };
 
 #endif

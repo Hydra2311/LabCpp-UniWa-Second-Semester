@@ -19,6 +19,7 @@ private:
 public:
     Subject(const string &,const string &,const int,Teacher *);
     Subject(const Subject &);
+    Subject(){};
     ~Subject();
 
     void SubPrint(ostream &) const;
