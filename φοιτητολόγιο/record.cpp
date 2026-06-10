@@ -420,12 +420,12 @@ void Record::TeacherICSV()
     }
 }
 
-vector <Person *> Record::GetMembers()
+vector <Person *> & Record::GetMembers()
 {
     return Members;
 }
 
-list <Subject> Record::GetSubjects()
+list <Subject> & Record::GetSubjects()
 {
     return AllSub;
 }

@@ -9,6 +9,10 @@
 
 using namespace std;
 
+enum Choices {AddSt,AddTeach,AddSub,PrintSt,PrintTeach,PrintSub,
+              SaveSt,SaveTeach,LoadSt,LoadTeach,AddSubSt,AddSubTeach,
+              EmailSt,EmailTeach,ChangeName,ChangeDesc,DeleteM,DeleteSub};
+
 int main()
 {
     setlocale(LC_ALL, "");
@@ -37,7 +41,7 @@ int main()
 
     keypad(menuwin,TRUE);
 
-    int numbofch = 14;
+    int numbofch = 18;
     string *choices = new string[numbofch];
     choices[0] = "Πρόσθεσε Μαθητή";
     choices[1] = "Πρόσθεσε Καθηγητή";
@@ -53,6 +57,10 @@ int main()
     choices[11] = "Προσθήκη Μαθήματος σε Καθηγητή";
     choices[12] = "Αποστολή Email σε Μαθητές";
     choices[13] = "Αποστολή Email σε Καθηγητές";
+    choices[14] = "Αλλαγή Ονόματος Καθηγητή/Μαθητή";
+    choices[15] = "Αλλαγή Περιγραφής Μαθήματος";
+    choices[16] = "Διαγραφή Μέλους";
+    choices[17] = "Διαγραφή Μαθήματος";
 
     int choice, highlighted = 0;
 
@@ -100,7 +108,7 @@ int main()
         {
             switch (highlighted)
             {
-                case 0:
+                case AddSt:
                 {
                     Student *Added = new Student(".",".",'.',1,empty_list);
                     WINDOW *addS = newwin(LINES,COLS,0,0);
@@ -137,7 +145,7 @@ int main()
 
                     break;
                 }
-                case 1:
+                case AddTeach:
                 {
                     Teacher *Added = new Teacher(".",'.',".",".",empty_list);
                     WINDOW *addT = newwin(LINES,COLS,0,0);
@@ -175,10 +183,10 @@ int main()
 
                     break;
                 }
-                case 2:
+                case AddSub:
                 {
                     bool teacherfound = false;
-                    vector <Person *> search = record.GetMembers();
+                    vector <Person *> &search = record.GetMembers();
                     for (int i = 0;i < search.size(); i++)
                     {
                         Teacher *Maybe = dynamic_cast<Teacher *>(search[i]);
@@ -250,13 +258,13 @@ int main()
 
                     break;                   
                 }
-                case 3:
+                case PrintSt:
                 {
                     WINDOW *printS = newwin(LINES,COLS,0,0);
                     box(printS,0,0);
                     mvwprintw(printS,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΜΑΘΗΤΏΝ"); 
 
-                    vector <Person *> search = record.GetMembers();
+                    vector <Person *> &search = record.GetMembers();
 
                     int currentLine = 3;
 
@@ -288,13 +296,13 @@ int main()
 
                     break;
                 }
-                case 4:
+                case PrintTeach:
                 {
                     WINDOW *printΤ = newwin(LINES,COLS,0,0);
                     box(printΤ,0,0);
                     mvwprintw(printΤ,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΚΑΘΗΓΗΤΏΝ"); 
 
-                    vector <Person *> search = record.GetMembers();
+                    vector <Person *> &search = record.GetMembers();
 
                     int currentLine = 3;
 
@@ -326,14 +334,14 @@ int main()
 
                     break;
                 }
-                case 5:
+                case PrintSub:
                 {
                     WINDOW *printSub = newwin(LINES,COLS,0,0);
                     box(printSub,0,0);
                     mvwprintw(printSub,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΜΑΘΗΜΆΤΩΝ"); 
 
                     list <Subject> :: iterator l;
-                    list <Subject> forprint = record.GetSubjects();
+                    list <Subject> &forprint = record.GetSubjects();
 
                     int current = 0;
 
@@ -352,7 +360,7 @@ int main()
 
                     break;
                 }
-                case 6:
+                case SaveSt:
                 {
                     try
                     {
@@ -371,7 +379,7 @@ int main()
                     wrefresh(menuwin);
                     break;
                 }
-                case 7:
+                case SaveTeach:
                 {
                     try
                     {
@@ -391,7 +399,7 @@ int main()
                     wrefresh(menuwin);
                     break;
                 }
-                case 8:
+                case LoadSt:
                 {
                     try
                     {
@@ -410,7 +418,7 @@ int main()
                     wrefresh(menuwin);
                     break;
                 }
-                case 9:
+                case LoadTeach:
                 {
                     try
                     {
@@ -431,7 +439,7 @@ int main()
 
                     break;
                 }
-                case 10:
+                case AddSubSt:
                 {
                     WINDOW *addSS = newwin(LINES,COLS,0,0);
                     box(addSS,0,0);
@@ -449,9 +457,9 @@ int main()
                         mvwprintw(addSS, 5, 20, "                    ");
 
                         list <Subject> :: iterator l;
-                        list <Subject> forsearch = record.GetSubjects();
+                        list <Subject> &forsearch = record.GetSubjects();
 
-                        vector <Person *> search3 = record.GetMembers();
+                        vector <Person *> &search3 = record.GetMembers();
 
                         echo();
                         char input[100];
@@ -496,7 +504,7 @@ int main()
 
                     break;
                 }
-                case 11:
+                case AddSubTeach:
                 {
                     WINDOW *addST = newwin(LINES,COLS,0,0);
                     box(addST,0,0);
@@ -514,9 +522,9 @@ int main()
                         mvwprintw(addST, 5, 20, "                    ");
 
                         list <Subject> :: iterator l;
-                        list <Subject> forsearch = record.GetSubjects();
+                        list <Subject> &forsearch = record.GetSubjects();
 
-                        vector <Person *> search3 = record.GetMembers();
+                        vector <Person *> &search3 = record.GetMembers();
 
                         echo();
                         char input[100];
@@ -561,7 +569,7 @@ int main()
 
                     break;
                 }
-                case 12:
+                case EmailSt:
                 {
                     WINDOW *writeS = newwin(LINES,COLS,0,0);
                     box(writeS,0,0);
@@ -582,7 +590,7 @@ int main()
                     box(emailS,0,0);
                     mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
 
-                    vector <Person *> email = record.GetMembers();
+                    vector <Person *> &email = record.GetMembers();
 
                     int distance = 3;
                     for(int i = 0;i < email.size();i++)
@@ -609,7 +617,7 @@ int main()
 
                     break;
                 }
-                case 13:
+                case EmailTeach:
                 {
                     WINDOW *writeT = newwin(LINES,COLS,0,0);
                     box(writeT,0,0);
@@ -630,7 +638,7 @@ int main()
                     box(emailS,0,0);
                     mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
 
-                    vector <Person *> email = record.GetMembers();
+                    vector <Person *> &email = record.GetMembers();
 
                     int distance = 3;
                     for(int i = 0;i < email.size();i++)
@@ -651,6 +659,213 @@ int main()
                     wgetch (emailS);
 
                     delwin(emailS);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case ChangeName:
+                {
+                    WINDOW *changeN = newwin(LINES,COLS,0,0);
+                    box(changeN,0,0);
+                    mvwprintw(changeN,1,COLS/2-5,"ΑΛΛΑΓΉ ΟΝΌΜΑΤΟΣ");
+                    mvwprintw(changeN,4,1,"Καινούριο Όνομα: ");
+                    mvwprintw(changeN,5,1,"Κωδικός/ΑΜ: ");
+
+                    bool validcode;
+
+                    do
+                    {
+                        validcode = false;
+
+                        mvwprintw(changeN, 4, 20, "                    "); 
+                        mvwprintw(changeN, 5, 20, "                    ");
+
+                        vector <Person *> &search3 = record.GetMembers();
+
+                        echo();
+                        char input[100];
+
+                        mvwgetnstr(changeN, 4, 20, input, 99);
+                        string newname(input);
+
+                        mvwgetnstr(changeN, 5, 20, input, 99);
+                        for (int i=0; i < search3.size();i ++)
+                        {
+                            if (Student *maybe = dynamic_cast<Student *>(search3[i]))
+                            {
+                                if (!strcmp(maybe->GetAM(),input))
+                                {
+                                    maybe->SetName(newname);
+                                    validcode = true;
+                                    break;
+                                }
+                            }
+                            if (Teacher *maybe2 = dynamic_cast<Teacher *>(search3[i]))
+                            {
+                                if (!strcmp(maybe2->GetCode(),input))
+                                {
+                                    maybe2->SetName(newname);
+                                    validcode = true;
+                                    break;
+                                }
+                            }
+                        }   
+                    } 
+                    while (validcode == false);
+
+                    wrefresh (changeN);
+
+                    delwin(changeN);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case ChangeDesc:
+                {
+                    WINDOW *changeD = newwin(LINES,COLS,0,0);
+                    box(changeD,0,0);
+                    mvwprintw(changeD,1,COLS/2-5,"ΑΛΛΑΓΉ ΠΕΡΙΓΡΑΦΉΣ");
+                    mvwprintw(changeD,4,1,"Καινούρια Περιγραφή: ");
+                    mvwprintw(changeD,5,1,"Κωδικός: ");
+
+                    bool validcode;
+
+                    do
+                    {
+                        validcode = false;
+
+                        mvwprintw(changeD, 4, 24, "                    "); 
+                        mvwprintw(changeD, 5, 20, "                    ");
+
+                        list <Subject> :: iterator l;
+                        list <Subject> &forchange = record.GetSubjects();
+
+                        echo();
+                        char input[100];
+
+                        mvwgetnstr(changeD, 4, 24, input, 99);
+                        string newdes(input);
+
+                        mvwgetnstr(changeD, 5, 20, input, 99);
+                        string CodeS(input);
+                        for (l = forchange.begin() ; l != forchange.end(); l++)
+                        {
+                            if (CodeS == l->getSub())
+                            {
+                                l->setDes(newdes);
+                                validcode = true;
+                                break;
+                            }
+                        }   
+                    } 
+                    while (validcode == false);
+
+                    wrefresh (changeD);
+
+                    delwin(changeD);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case DeleteM:
+                {
+                    WINDOW *changeN = newwin(LINES,COLS,0,0);
+                    box(changeN,0,0);
+                    mvwprintw(changeN,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΈΛΟΥΣ");
+                    mvwprintw(changeN,4,1,"Κωδικός/ΑΜ για Διαγραφή: ");
+
+                    bool validcode;
+
+                    do
+                    {
+                        validcode = false;
+
+                        mvwprintw(changeN, 4, 30, "                    "); 
+
+
+                        vector <Person *> &search3 = record.GetMembers();
+
+                        echo();
+                        char input[100];
+
+                        mvwgetnstr(changeN, 4, 30, input, 99);
+                        for (int i=0; i < search3.size();i ++)
+                        {
+                            if (Student *maybe = dynamic_cast<Student *>(search3[i]))
+                            {
+                                if (!strcmp(maybe->GetAM(),input))
+                                {
+                                    record.DeleteMember(input);
+                                    validcode = true;
+                                    break;
+                                }
+                            }
+                            if (Teacher *maybe2 = dynamic_cast<Teacher *>(search3[i]))
+                            {
+                                if (!strcmp(maybe2->GetCode(),input))
+                                {
+                                    record.DeleteMember(input);
+                                    validcode = true;
+                                    break;
+                                }
+                            }
+                        }   
+                    } 
+                    while (validcode == false);
+
+                    wrefresh (changeN);
+
+                    delwin(changeN);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case DeleteSub:
+                {
+                    WINDOW *changeD = newwin(LINES,COLS,0,0);
+                    box(changeD,0,0);
+                    mvwprintw(changeD,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΑΘΉΜΑΤΟΣ");
+                    mvwprintw(changeD,4,1,"Κωδικός για Διαγραφή: ");
+
+                    bool validcode;
+
+                    do
+                    {
+                        validcode = false;
+
+                        mvwprintw(changeD, 4, 27, "                    "); 
+
+                        list <Subject> :: iterator l;
+                        list <Subject> &forchange = record.GetSubjects();
+
+                        echo();
+                        char input[100];
+
+                        mvwgetnstr(changeD, 4, 27, input, 99);
+
+                        for (l = forchange.begin() ; l != forchange.end(); l++)
+                        {
+                            if (input == l->getSub())
+                            {
+                                record.DeleteSubject(input);
+                                validcode = true;
+                                break;
+                            }
+                        }   
+                    } 
+                    while (validcode == false);
+
+                    wrefresh (changeD);
+
+                    delwin(changeD);
                     noecho();
                     touchwin(menuwin);
                     wrefresh(menuwin);
