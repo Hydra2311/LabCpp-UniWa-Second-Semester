@@ -37,7 +37,7 @@ int main()
 
     keypad(menuwin,TRUE);
 
-    int numbofch = 6;
+    int numbofch = 14;
     string *choices = new string[numbofch];
     choices[0] = "Πρόσθεσε Μαθητή";
     choices[1] = "Πρόσθεσε Καθηγητή";
@@ -45,6 +45,15 @@ int main()
     choices[3] = "Εκτύπωσε Μαθητές";
     choices[4] = "Εκτύπωση Καθηγητών";
     choices[5] = "Εκτύπωση Μαθημάτων";
+    choices[6] = "Αποθήκευση Μαθητών";
+    choices[7] = "Αποθήκευση Καθηγητών";
+    choices[8] = "Φόρτωση Μαθητών";
+    choices[9] = "Φόρτωση Καθηγητών";
+    choices[10] = "Προσθήκη Μαθήματος σε Μαθητή";
+    choices[11] = "Προσθήκη Μαθήματος σε Καθηγητή";
+    choices[12] = "Αποστολή Email σε Μαθητές";
+    choices[13] = "Αποστολή Email σε Καθηγητές";
+
     int choice, highlighted = 0;
 
     while(1)
@@ -133,7 +142,7 @@ int main()
                     Teacher *Added = new Teacher(".",'.',".",".",empty_list);
                     WINDOW *addT = newwin(LINES,COLS,0,0);
                     box(addT,0,0);
-                    mvwprintw(addT,1,COLS/2-5,"ΠΡΟΣΘΕΣΕ ΜΑΘΗΤΗ");
+                    mvwprintw(addT,1,COLS/2-5,"ΠΡΟΣΘΕΣΕ ΚΑΘΗΓΗΤΉ");
                     mvwprintw(addT,4,1,"Όνομα Επίθετο: ");
                     mvwprintw(addT,5,1,"Φύλο: ");
                     mvwprintw(addT,6,1,"Κωδικός: ");
@@ -211,6 +220,7 @@ int main()
 
                     do
                     {
+                        mvwprintw(AddSub, 7, 20, "                    ");
                         mvwgetnstr(AddSub, 7, 20, input, 99);
                         vector <Person *> search2 = record.GetMembers();
                         for (int i = 0;i < search2.size(); i++)
@@ -342,9 +352,314 @@ int main()
 
                     break;
                 }
+                case 6:
+                {
+                    try
+                    {
+                        record.StudentOCSV();
+                    }
+                    catch(int x)
+                    {
+                        mvwprintw(menuwin,9,20,"Αδυναμία Αποθήκευσης");
+                        wrefresh(menuwin);
+                        break;
+                    }
+                    mvwprintw(menuwin,9,30,"Επιτυχής Aποθήκευση");
+                    wrefresh(menuwin);
+                    wgetch(menuwin);
+                    mvwprintw(menuwin, 9, 30, "                    ");
+                    wrefresh(menuwin);
+                    break;
+                }
+                case 7:
+                {
+                    try
+                    {
+                        record.TeacherOCSV();
+                    }
+                    catch(int x)
+                    {
+                        mvwprintw(menuwin,10,20,"Αδυναμία Αποθήκευσης");
+                        wrefresh(menuwin);
+                        break;
+                    }
+                    mvwprintw(menuwin,10,30,"Επιτυχής Aποθήκευση");
+                    wrefresh(menuwin);
+                    wgetch(menuwin);
+                    mvwprintw(menuwin,10, 30, "                     ");
+                    wrefresh(menuwin);
+                    wrefresh(menuwin);
+                    break;
+                }
+                case 8:
+                {
+                    try
+                    {
+                        record.StudentICSV();
+                    }
+                    catch(int x)
+                    {
+                        mvwprintw(menuwin,11,30,"Αδυναμία Φόρτωσης");
+                        wrefresh(menuwin);
+                        break;
+                    }
+                    mvwprintw(menuwin,11,30,"Επιτυχής Φόρτωση");
+                    wrefresh(menuwin);
+                    wgetch(menuwin);
+                    mvwprintw(menuwin,11, 30, "                    ");
+                    wrefresh(menuwin);
+                    break;
+                }
+                case 9:
+                {
+                    try
+                    {
+                        record.TeacherICSV();
+                    }
+                    catch(int x)
+                    {
+                        mvwprintw(menuwin,12,30,"Αδυναμία Φόρτωσης");
+                        wrefresh(menuwin);
+                        break;
+                    }
+
+                    mvwprintw(menuwin,12,30,"Επιτυχής Φόρτωση");
+                    wrefresh(menuwin);
+                    wgetch(menuwin);
+                    mvwprintw(menuwin, 12, 30, "                    ");
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case 10:
+                {
+                    WINDOW *addSS = newwin(LINES,COLS,0,0);
+                    box(addSS,0,0);
+                    mvwprintw(addSS,1,COLS/2-5,"ΒΙΒΛΊΟ ΣΕ ΜΑΘΗΤΉ");
+                    mvwprintw(addSS,4,1,"Κωδικός Βιβλίου: ");
+                    mvwprintw(addSS,5,1,"AM Μαθήτη: ");
+
+                    bool validAM,validCode;
+
+                    do
+                    {
+                        validAM = false,validCode = false;
+
+                        mvwprintw(addSS, 4, 20, "                    "); 
+                        mvwprintw(addSS, 5, 20, "                    ");
+
+                        list <Subject> :: iterator l;
+                        list <Subject> forsearch = record.GetSubjects();
+
+                        vector <Person *> search3 = record.GetMembers();
+
+                        echo();
+                        char input[100];
+
+                        mvwgetnstr(addSS, 4, 20, input, 99);
+                        string Code(input);
+
+                        mvwgetnstr(addSS, 5, 20, input, 99);
+                        for (l = forsearch.begin(); l != forsearch.end(); l++)
+                        {
+                            if (l->getSub() == Code)
+                            {
+                                validCode = true;
+                                break;
+                            }
+                        }
+                        if (validCode == true)
+                        {
+                            for (int i=0; i < search3.size();i ++)
+                            {
+                                Student *Maybe = dynamic_cast<Student *>(search3[i]);
+                                if (Maybe)
+                                {
+                                    if (!strcmp(Maybe->GetAM(),input))
+                                    {
+                                        validAM = true;
+                                        search3[i]->AddSubject(*l);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } 
+                    while (validAM == false || validCode == false);
+
+                    wrefresh (addSS);
+
+                    delwin(addSS);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case 11:
+                {
+                    WINDOW *addST = newwin(LINES,COLS,0,0);
+                    box(addST,0,0);
+                    mvwprintw(addST,1,COLS/2-5,"ΒΙΒΛΊΟ ΣΕ ΚΑΘΗΓΗΤΉ");
+                    mvwprintw(addST,4,1,"Κωδικός Βιβλίου: ");
+                    mvwprintw(addST,5,1,"Κωδικός Καθηγητή: ");
+
+                    bool validTeachCode,validSubCode;
+
+                    do
+                    {
+                        validTeachCode = false,validSubCode = false;
+
+                        mvwprintw(addST, 4, 20, "                    "); 
+                        mvwprintw(addST, 5, 20, "                    ");
+
+                        list <Subject> :: iterator l;
+                        list <Subject> forsearch = record.GetSubjects();
+
+                        vector <Person *> search3 = record.GetMembers();
+
+                        echo();
+                        char input[100];
+
+                        mvwgetnstr(addST, 4, 20, input, 99);
+                        string Code(input);
+
+                        mvwgetnstr(addST, 5, 20, input, 99);
+                        for (l = forsearch.begin(); l != forsearch.end(); l++)
+                        {
+                            if (l->getSub() == Code)
+                            {
+                                validSubCode = true;
+                                break;
+                            }
+                        }
+                        if (validSubCode == true)
+                        {
+                            for (int i=0; i < search3.size();i ++)
+                            {
+                                Teacher *Maybe = dynamic_cast<Teacher *>(search3[i]);
+                                if (Maybe)
+                                {
+                                    if (!strcmp(Maybe->GetCode(),input))
+                                    {
+                                        validTeachCode = true;
+                                        search3[i]->AddSubject(*l);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } 
+                    while (validTeachCode == false || validSubCode == false);
+
+                    wrefresh (addST);
+
+                    delwin(addST);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case 12:
+                {
+                    WINDOW *writeS = newwin(LINES,COLS,0,0);
+                    box(writeS,0,0);
+                    mvwprintw(writeS,1,COLS/2-5,"ΜΉΝΥΜΑ EMAIL");
+                    mvwprintw(writeS,4,1,"Μήνυμα Email: ");
+
+                    echo();
+
+                    char input[100];
+
+                    mvwgetnstr(writeS, 4, 20, input, 99);
+                    noecho();
+
+                    wrefresh (writeS);
+                    delwin(writeS);
+
+                    WINDOW *emailS = newwin(LINES,COLS,0,0);
+                    box(emailS,0,0);
+                    mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
+
+                    vector <Person *> email = record.GetMembers();
+
+                    int distance = 3;
+                    for(int i = 0;i < email.size();i++)
+                    {
+                        if (Student *estud = dynamic_cast<Student *>(email[i]))
+                        {
+                            mvwprintw(emailS,i+distance,1,"Προς φοιτητή : %s AM : %s",(estud->GetName()).c_str(),estud->GetAM());
+
+                            distance++;
+
+                            mvwprintw(emailS,i+distance,1,"Περιεχόμενο : %s",input);
+
+                            distance+=2;
+                        }
+                    }
+
+                    wrefresh (emailS);
+                    wgetch (emailS);
+
+                    delwin(emailS);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
+                case 13:
+                {
+                    WINDOW *writeT = newwin(LINES,COLS,0,0);
+                    box(writeT,0,0);
+                    mvwprintw(writeT,1,COLS/2-5,"ΜΉΝΥΜΑ EMAIL");
+                    mvwprintw(writeT,4,1,"Μήνυμα Email: ");
+
+                    echo();
+
+                    char input[100];
+
+                    mvwgetnstr(writeT, 4, 20, input, 99);
+                    noecho();
+
+                    wrefresh (writeT);
+                    delwin(writeT);
+
+                    WINDOW *emailS = newwin(LINES,COLS,0,0);
+                    box(emailS,0,0);
+                    mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
+
+                    vector <Person *> email = record.GetMembers();
+
+                    int distance = 3;
+                    for(int i = 0;i < email.size();i++)
+                    {
+                        if (Teacher *eteach = dynamic_cast<Teacher *>(email[i]))
+                        {
+                            mvwprintw(emailS,i+distance,1,"Προς καθηγητή : %s Κωδικός : %s",(eteach->GetName()).c_str(),eteach->GetCode());
+
+                            distance++;
+
+                            mvwprintw(emailS,i+distance,1,"Περιεχόμενο : %s",input);
+
+                            distance+=2;
+                        }
+                    }
+
+                    wrefresh (emailS);
+                    wgetch (emailS);
+
+                    delwin(emailS);
+                    noecho();
+                    touchwin(menuwin);
+                    wrefresh(menuwin);
+
+                    break;
+                }
             }
         }
-        if (choice == 'q' || choice == 'Q')
+        if (choice == 'q' || choice == 'Q' || choice == ';')
         {
             endwin();
             exit(1);
