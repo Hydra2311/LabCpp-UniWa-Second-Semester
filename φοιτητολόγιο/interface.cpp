@@ -371,6 +371,7 @@ int main()
                     mvwprintw(addSS,1,COLS/2-5,"ΒΙΒΛΊΟ ΣΕ ΜΑΘΗΤΉ");
                     mvwprintw(addSS,4,1,"Κωδικός Βιβλίου: ");
                     mvwprintw(addSS,5,1,"AM Μαθήτη: ");
+                    mvwprintw(addSS,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     bool validAM,validCode;
 
@@ -391,6 +392,11 @@ int main()
 
                         mvwgetnstr(addSS, 4, 20, input, 99);
                         string Code(input);
+
+                        if (Code == "Έξοδος" || Code == "Εξοδος")
+                        {
+                            break;
+                        }
 
                         mvwgetnstr(addSS, 5, 20, input, 99);
                         for (l = forsearch.begin(); l != forsearch.end(); l++)
@@ -436,6 +442,7 @@ int main()
                     mvwprintw(addST,1,COLS/2-5,"ΒΙΒΛΊΟ ΣΕ ΚΑΘΗΓΗΤΉ");
                     mvwprintw(addST,4,1,"Κωδικός Βιβλίου: ");
                     mvwprintw(addST,5,1,"Κωδικός Καθηγητή: ");
+                    mvwprintw(addST,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     bool validTeachCode,validSubCode;
 
@@ -456,6 +463,11 @@ int main()
 
                         mvwgetnstr(addST, 4, 20, input, 99);
                         string Code(input);
+
+                        if (Code == "Έξοδος" || Code == "Εξοδος")
+                        {
+                            break;
+                        }                        
 
                         mvwgetnstr(addST, 5, 20, input, 99);
                         for (l = forsearch.begin(); l != forsearch.end(); l++)
@@ -500,12 +512,22 @@ int main()
                     box(writeS,0,0);
                     mvwprintw(writeS,1,COLS/2-5,"ΜΉΝΥΜΑ EMAIL");
                     mvwprintw(writeS,4,1,"Μήνυμα Email: ");
+                    mvwprintw(writeS,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     echo();
                     char input[100];
 
                     mvwgetnstr(writeS, 4, 20, input, 99);
+                    string Code(input);
                     noecho();
+                    if (Code == "Έξοδος" || Code == "Εξοδος")
+                    {
+                        wrefresh (writeS);
+                        delwin(writeS);
+                        touchwin(menuwin);
+                        wrefresh(menuwin);
+                        break;
+                    }
                     wrefresh (writeS);
                     delwin(writeS);
 
@@ -523,13 +545,23 @@ int main()
                     box(writeT,0,0);
                     mvwprintw(writeT,1,COLS/2-5,"ΜΉΝΥΜΑ EMAIL");
                     mvwprintw(writeT,4,1,"Μήνυμα Email: ");
+                    mvwprintw(writeT,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     echo();
 
                     char input[100];
 
                     mvwgetnstr(writeT, 4, 20, input, 99);
+                    string Code(input);
                     noecho();
+                    if (Code == "Έξοδος" || Code == "Εξοδος")
+                    {
+                        wrefresh (writeT);
+                        delwin(writeT);
+                        touchwin(menuwin);
+                        wrefresh(menuwin);
+                        break;
+                    }
 
                     wrefresh (writeT);
                     delwin(writeT);
@@ -549,6 +581,7 @@ int main()
                     mvwprintw(changeN,1,COLS/2-5,"ΑΛΛΑΓΉ ΟΝΌΜΑΤΟΣ");
                     mvwprintw(changeN,4,1,"Καινούριο Όνομα: ");
                     mvwprintw(changeN,5,1,"Κωδικός/ΑΜ: ");
+                    mvwprintw(changeN,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     bool validcode;
 
@@ -567,6 +600,11 @@ int main()
                         mvwgetnstr(changeN, 4, 20, input, 99);
                         string newname(input);
 
+                        if (newname == "Έξοδος" || newname == "Εξοδος")
+                        {
+                            break;
+                        }
+
                         mvwgetnstr(changeN, 5, 20, input, 99);
                         for (int i=0; i < search3.size();i ++)
                         {
@@ -574,7 +612,7 @@ int main()
                             {
                                 if (!strcmp(maybe->GetAM(),input))
                                 {
-                                    maybe->SetName(newname);
+                                    record.CChangeName(i,newname);
                                     validcode = true;
                                     break;
                                 }
@@ -608,6 +646,7 @@ int main()
                     mvwprintw(changeD,1,COLS/2-5,"ΑΛΛΑΓΉ ΠΕΡΙΓΡΑΦΉΣ");
                     mvwprintw(changeD,4,1,"Καινούρια Περιγραφή: ");
                     mvwprintw(changeD,5,1,"Κωδικός: ");
+                    mvwprintw(changeD,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     bool validcode;
 
@@ -626,6 +665,10 @@ int main()
 
                         mvwgetnstr(changeD, 4, 24, input, 99);
                         string newdes(input);
+                        if (newdes == "Έξοδος" || newdes == "Εξοδος")
+                        {
+                            break;
+                        }
 
                         mvwgetnstr(changeD, 5, 20, input, 99);
                         string CodeS(input);
@@ -634,6 +677,19 @@ int main()
                             if (CodeS == l->getSub())
                             {
                                 l->setDes(newdes);
+                                vector <Person *> change = record.GetMembers();
+                                for (int i = 0;i < change.size(); i++)
+                                {
+                                    list <Subject> &changedes = change[i]->GetList();
+                                    list <Subject> :: iterator l;
+                                    for (l = changedes.begin(); l != changedes.end() ; l++)
+                                    {
+                                        if (l->getSub() == CodeS)
+                                        {
+                                            l->setDes(newdes);
+                                        }
+                                    }
+                                }
                                 validcode = true;
                                 break;
                             }
@@ -656,6 +712,7 @@ int main()
                     box(deleteM,0,0);
                     mvwprintw(deleteM,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΈΛΟΥΣ");
                     mvwprintw(deleteM,4,1,"Κωδικός/ΑΜ για Διαγραφή: ");
+                    mvwprintw(deleteM,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     bool validcode;
 
@@ -672,6 +729,11 @@ int main()
                         char input[100];
 
                         mvwgetnstr(deleteM, 4, 30, input, 99);
+                        string Code(input);
+                        if (Code == "Έξοδος" || Code == "Εξοδος")
+                        {
+                            break;
+                        }
                         for (int i=0; i < search3.size();i ++)
                         {
                             if (Student *maybe = dynamic_cast<Student *>(search3[i]))
@@ -711,6 +773,7 @@ int main()
                     box(deleteS,0,0);
                     mvwprintw(deleteS,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΑΘΉΜΑΤΟΣ");
                     mvwprintw(deleteS,4,1,"Κωδικός για Διαγραφή: ");
+                    mvwprintw(deleteS,LINES-2,COLS-50,"Πληκτρολογήστε 'Έξοδος' για έξοδο");
 
                     bool validcode;
 
@@ -727,12 +790,30 @@ int main()
                         char input[100];
 
                         mvwgetnstr(deleteS, 4, 27, input, 99);
+                        string Code(input);
+                        if (Code == "Έξοδος" || Code == "Εξοδος")
+                        {
+                            break;
+                        }
 
                         for (l = forchange.begin() ; l != forchange.end(); l++)
                         {
                             if (input == l->getSub())
                             {
                                 record.DeleteSubject(input);
+                                vector <Person *> change = record.GetMembers();
+                                for (int i = 0;i < change.size(); i++)
+                                {
+                                    list <Subject> &changedes = change[i]->GetList();
+                                    list <Subject> :: iterator l;
+                                    for (l = changedes.begin(); l != changedes.end() ; l++)
+                                    {
+                                        if (l->getSub() == input)
+                                        {
+                                            l = changedes.erase(l);
+                                        }
+                                    }
+                                }
                                 validcode = true;
                                 break;
                             }
@@ -754,6 +835,7 @@ int main()
         if (choice == 'q' || choice == 'Q' || choice == ';')
         {
             endwin();
+            delete[] choices;
             exit(1);
         }
     }

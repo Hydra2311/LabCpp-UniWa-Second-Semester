@@ -25,6 +25,7 @@ public:
 
     string GetName() const;
     char GetMF() const;
+    list <Subject> & GetList();
     const list <Subject> & GetList() const;
 
     void SetName(const string);

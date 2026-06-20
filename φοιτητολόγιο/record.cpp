@@ -6,6 +6,16 @@
 #include <ncurses.h>
 #include <locale.h>
 
+Record::~Record()
+{
+    for (int i=0; i <= Members.size(); i++)
+    {
+        delete Members[i];
+    }
+
+    Members.clear();
+}
+
 void Record::AddPerson(Person *newly)
 {
     Members.push_back(newly);
@@ -16,7 +26,7 @@ void Record::AddSubject(const Subject &newly)
     AllSub.push_back(newly);
 }
 
-void Record::PrintMemb(ostream &x)
+void Record::PrintMemb(ostream &x) const
 {
     for (int i=0;i<Members.size();i++)
     {
@@ -188,6 +198,11 @@ void Record::ChangeDesc(const string &code,const string &desc)
             Members[i]->SetList(temp);
         }
     }
+}
+
+void Record::CChangeName(const int &i,const string &newname)
+{
+    Members[i]->SetName(newname);
 }
 
 void Record::DeleteMember(const char *code)

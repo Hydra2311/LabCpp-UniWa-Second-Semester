@@ -30,6 +30,11 @@ char Person::GetMF() const
 	return m_f;
 }
 
+list <Subject> & Person::GetList()
+{
+    return Subjects;
+}
+
 const list <Subject> & Person::GetList() const
 {
     return Subjects;

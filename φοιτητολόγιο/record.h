@@ -19,12 +19,12 @@ private:
 public:
     Record(const vector<Person *> &People,const list<Subject> &Subjects) : Members(People),AllSub(Subjects){};
     Record(){};
-    ~Record(){};
+    ~Record();
 
     void AddPerson(Person *);
     void AddSubject(const Subject &);
 
-    void PrintMemb(ostream &);
+    void PrintMemb(ostream &) const;
     void PrintSub(ostream &);
     void CPrintSt();
     void CPrintT();
@@ -32,6 +32,7 @@ public:
 
     void ChangeName(const char *,const string &); 
     void ChangeDesc(const string &,const string &);
+    void CChangeName(const int &,const string &);
 
     void DeleteMember(const char *);
     void DeleteSubject(const string &);
