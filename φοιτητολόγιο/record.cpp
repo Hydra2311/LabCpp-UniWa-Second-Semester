@@ -3,6 +3,8 @@
 #include "teacher.h"
 #include <fstream>
 #include <sstream>
+#include <ncurses.h>
+#include <locale.h>
 
 void Record::AddPerson(Person *newly)
 {
@@ -30,6 +32,99 @@ void Record::PrintSub(ostream &x)
     {
         l->SubPrint(cout);
     }
+}
+
+void Record::CPrintSt()
+{
+    WINDOW *printS = newwin(LINES,COLS,0,0);
+    box(printS,0,0);
+    mvwprintw(printS,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΜΑΘΗΤΏΝ"); 
+
+    vector <Person *> &search = this->GetMembers();
+
+    int currentLine = 3;
+
+    for (int i = 0;i < search.size(); i++)
+    {
+        Student *Maybe = dynamic_cast<Student *>(search[i]);
+        if (Maybe)
+        {
+            mvwprintw(printS,currentLine,1,"Όνομα/Επίθετο: %s, Φύλο: %c, Α.Μ: %s, Εξάμηνο: %d", Maybe->GetName().c_str(), Maybe->GetMF(), Maybe->GetAM(), Maybe->GetSem());
+            currentLine++;
+
+            list <Subject> :: iterator l;
+            list <Subject> forprint = Maybe->GetList();
+            for(l = forprint.begin(); l != forprint.end(); l++)
+            {
+                mvwprintw(printS,currentLine,1,"Κωδικός: %s, Περιγραφή: %s, Εξάμηνο: %d, Υπεύθυνος: %s", l->getSub().c_str(), l->getDes().c_str(), l->getSem(), (l->getHead())->GetName().c_str());
+                currentLine++;
+            }
+            currentLine++;
+        }
+    }
+
+    wrefresh (printS);
+    wgetch (printS);
+
+    delwin(printS);
+}
+
+void Record::CPrintT()
+{
+    WINDOW *printΤ = newwin(LINES,COLS,0,0);
+    box(printΤ,0,0);
+    mvwprintw(printΤ,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΚΑΘΗΓΗΤΏΝ"); 
+
+    vector <Person *> &search = this->GetMembers();
+
+    int currentLine = 3;
+
+    for (int i = 0;i < search.size(); i++)
+    {
+        Teacher *Maybe = dynamic_cast<Teacher *>(search[i]);
+        if (Maybe)
+        {
+            mvwprintw(printΤ,currentLine,1,"Όνομα/Επίθετο: %s, Φύλο: %c, Κωδικός: %s, Ειδικότητα: %s", Maybe->GetName().c_str(), Maybe->GetMF(), Maybe->GetCode(), Maybe->GetSpecial().c_str());
+            currentLine++;
+
+            list <Subject> :: iterator l;
+            list <Subject> forprint = Maybe->GetList();
+            for(l = forprint.begin(); l != forprint.end(); l++)
+            {
+                mvwprintw(printΤ,currentLine,1,"Κωδικός: %s, Περιγραφή: %s, Εξάμηνο: %d, Υπεύθυνος: %s", l->getSub().c_str(), l->getDes().c_str(), l->getSem(), (l->getHead())->GetName().c_str());
+                currentLine++;
+            }
+            currentLine++;
+        }
+    }
+
+    wrefresh (printΤ);
+    wgetch (printΤ);
+
+    delwin(printΤ);
+}
+
+void Record::CPrintSub()
+{
+    WINDOW *printSub = newwin(LINES,COLS,0,0);
+    box(printSub,0,0);
+    mvwprintw(printSub,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΜΑΘΗΜΆΤΩΝ"); 
+
+    list <Subject> :: iterator l;
+    list <Subject> &forprint = this->GetSubjects();
+
+    int current = 0;
+
+    for (l = forprint.begin(); l != forprint.end(); l++)
+    {
+        mvwprintw(printSub,current+3,1,"Κωδικός: %s, Περιγραφή: %s, Εξάμηνο: %d, Υπεύθυνος: %s", l->getSub().c_str(), l->getDes().c_str(), l->getSem(), (l->getHead())->GetName().c_str());
+        current++;
+    }
+
+    wrefresh (printSub);
+    wgetch (printSub);
+
+    delwin(printSub);
 }
 
 void Record::ChangeName(const char *code,const string &newname)
@@ -196,6 +291,62 @@ void Record::EmailTeacher(ostream &x,const string &message)
             x << "Περιεχόμενο : " << message << endl;
         }
     }
+}
+
+void Record::CEmailStudent(const string &input)
+{
+    noecho();
+
+    WINDOW *emailS = newwin(LINES,COLS,0,0);
+    box(emailS,0,0);
+    mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
+
+    vector <Person *> &email = this->GetMembers();
+
+    int distance = 3;
+    for(int i = 0;i < email.size();i++)
+    {
+        if (Student *estud = dynamic_cast<Student *>(email[i]))
+        {
+            mvwprintw(emailS,i+distance,1,"Προς φοιτητή : %s AM : %s",(estud->GetName()).c_str(),estud->GetAM());
+
+            distance++;
+
+            mvwprintw(emailS,i+distance,1,"Περιεχόμενο : %s",input.c_str());
+
+            distance+=2;
+        }
+    }
+
+    wrefresh (emailS);
+    wgetch (emailS);
+
+    delwin(emailS);
+}
+
+void Record::CEmailTeacher(const string &input)
+{
+    WINDOW *emailS = newwin(LINES,COLS,0,0);
+    box(emailS,0,0);
+    mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
+
+    vector <Person *> &email = this->GetMembers();
+
+    int distance = 3;
+    for(int i = 0;i < email.size();i++)
+    {
+        if (Teacher *eteach = dynamic_cast<Teacher *>(email[i]))
+        {
+            mvwprintw(emailS,i+distance,1,"Προς καθηγητή : %s Κωδικός : %s",(eteach->GetName()).c_str(),eteach->GetCode());
+            distance++;
+            mvwprintw(emailS,i+distance,1,"Περιεχόμενο : %s",input.c_str());
+            distance+=2;
+        }
+    }
+
+    wrefresh (emailS);
+    wgetch (emailS);
+    delwin(emailS);
 }
 
 void Record::StudentOCSV()

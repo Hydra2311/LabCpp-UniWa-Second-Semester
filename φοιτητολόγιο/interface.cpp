@@ -260,37 +260,8 @@ int main()
                 }
                 case PrintSt:
                 {
-                    WINDOW *printS = newwin(LINES,COLS,0,0);
-                    box(printS,0,0);
-                    mvwprintw(printS,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΜΑΘΗΤΏΝ"); 
+                    record.CPrintSt();
 
-                    vector <Person *> &search = record.GetMembers();
-
-                    int currentLine = 3;
-
-                    for (int i = 0;i < search.size(); i++)
-                    {
-                        Student *Maybe = dynamic_cast<Student *>(search[i]);
-                        if (Maybe)
-                        {
-                            int distance = 0;
-                            mvwprintw(printS,currentLine,1,"Όνομα/Επίθετο: %s, Φύλο: %c, Α.Μ: %s, Εξάμηνο: %d", Maybe->GetName().c_str(), Maybe->GetMF(), Maybe->GetAM(), Maybe->GetSem());
-
-                            list <Subject> :: iterator l;
-                            list <Subject> forprint = Maybe->GetList();
-                            for(l = forprint.begin(); l != forprint.end(); l++)
-                            {
-                               mvwprintw(printS,i+3+distance+1,1,"Κωδικός: %s, Περιγραφή: %s, Εξάμηνο: %d, Υπεύθυνος: %s", l->getSub().c_str(), l->getDes().c_str(), l->getSem(), (l->getHead())->GetName().c_str());
-                               currentLine++;
-                            }
-                            currentLine++;
-                        }
-                    }
-
-                    wrefresh (printS);
-                    wgetch (printS);
-
-                    delwin(printS);
                     touchwin(menuwin);
                     wrefresh(menuwin);
 
@@ -298,37 +269,8 @@ int main()
                 }
                 case PrintTeach:
                 {
-                    WINDOW *printΤ = newwin(LINES,COLS,0,0);
-                    box(printΤ,0,0);
-                    mvwprintw(printΤ,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΚΑΘΗΓΗΤΏΝ"); 
+                    record.CPrintT();
 
-                    vector <Person *> &search = record.GetMembers();
-
-                    int currentLine = 3;
-
-                    for (int i = 0;i < search.size(); i++)
-                    {
-                        Teacher *Maybe = dynamic_cast<Teacher *>(search[i]);
-                        if (Maybe)
-                        {
-                            int distance = 0;
-                            mvwprintw(printΤ,currentLine,1,"Όνομα/Επίθετο: %s, Φύλο: %c, Κωδικός: %s, Ειδικότητα: %s", Maybe->GetName().c_str(), Maybe->GetMF(), Maybe->GetCode(), Maybe->GetSpecial().c_str());
-
-                            list <Subject> :: iterator l;
-                            list <Subject> forprint = Maybe->GetList();
-                            for(l = forprint.begin(); l != forprint.end(); l++)
-                            {
-                               mvwprintw(printΤ,i+3+distance+1,1,"Κωδικός: %s, Περιγραφή: %s, Εξάμηνο: %d, Υπεύθυνος: %s", l->getSub().c_str(), l->getDes().c_str(), l->getSem(), (l->getHead())->GetName().c_str());
-                               currentLine++;
-                            }
-                            currentLine++;
-                        }
-                    }
-
-                    wrefresh (printΤ);
-                    wgetch (printΤ);
-
-                    delwin(printΤ);
                     touchwin(menuwin);
                     wrefresh(menuwin);
 
@@ -336,25 +278,8 @@ int main()
                 }
                 case PrintSub:
                 {
-                    WINDOW *printSub = newwin(LINES,COLS,0,0);
-                    box(printSub,0,0);
-                    mvwprintw(printSub,1,COLS/2-5,"ΕΚΤΎΠΩΣΗ ΜΑΘΗΜΆΤΩΝ"); 
+                    record.CPrintSub();
 
-                    list <Subject> :: iterator l;
-                    list <Subject> &forprint = record.GetSubjects();
-
-                    int current = 0;
-
-                    for (l = forprint.begin(); l != forprint.end(); l++)
-                    {
-                        mvwprintw(printSub,current+3,1,"Κωδικός: %s, Περιγραφή: %s, Εξάμηνο: %d, Υπεύθυνος: %s", l->getSub().c_str(), l->getDes().c_str(), l->getSem(), (l->getHead())->GetName().c_str());
-                        current++;
-                    }
-
-                    wrefresh (printSub);
-                    wgetch (printSub);
-
-                    delwin(printSub);
                     touchwin(menuwin);
                     wrefresh(menuwin);
 
@@ -577,41 +502,16 @@ int main()
                     mvwprintw(writeS,4,1,"Μήνυμα Email: ");
 
                     echo();
-
                     char input[100];
 
                     mvwgetnstr(writeS, 4, 20, input, 99);
                     noecho();
-
                     wrefresh (writeS);
                     delwin(writeS);
 
-                    WINDOW *emailS = newwin(LINES,COLS,0,0);
-                    box(emailS,0,0);
-                    mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
+                    string Email(input);
+                    record.CEmailStudent(Email);
 
-                    vector <Person *> &email = record.GetMembers();
-
-                    int distance = 3;
-                    for(int i = 0;i < email.size();i++)
-                    {
-                        if (Student *estud = dynamic_cast<Student *>(email[i]))
-                        {
-                            mvwprintw(emailS,i+distance,1,"Προς φοιτητή : %s AM : %s",(estud->GetName()).c_str(),estud->GetAM());
-
-                            distance++;
-
-                            mvwprintw(emailS,i+distance,1,"Περιεχόμενο : %s",input);
-
-                            distance+=2;
-                        }
-                    }
-
-                    wrefresh (emailS);
-                    wgetch (emailS);
-
-                    delwin(emailS);
-                    noecho();
                     touchwin(menuwin);
                     wrefresh(menuwin);
 
@@ -634,32 +534,9 @@ int main()
                     wrefresh (writeT);
                     delwin(writeT);
 
-                    WINDOW *emailS = newwin(LINES,COLS,0,0);
-                    box(emailS,0,0);
-                    mvwprintw(emailS,1,COLS/2-5,"ΑΠΟΣΤΟΛΉ EMAIL");
+                    string EmailT(input);
+                    record.CEmailTeacher(EmailT);
 
-                    vector <Person *> &email = record.GetMembers();
-
-                    int distance = 3;
-                    for(int i = 0;i < email.size();i++)
-                    {
-                        if (Teacher *eteach = dynamic_cast<Teacher *>(email[i]))
-                        {
-                            mvwprintw(emailS,i+distance,1,"Προς καθηγητή : %s Κωδικός : %s",(eteach->GetName()).c_str(),eteach->GetCode());
-
-                            distance++;
-
-                            mvwprintw(emailS,i+distance,1,"Περιεχόμενο : %s",input);
-
-                            distance+=2;
-                        }
-                    }
-
-                    wrefresh (emailS);
-                    wgetch (emailS);
-
-                    delwin(emailS);
-                    noecho();
                     touchwin(menuwin);
                     wrefresh(menuwin);
 
@@ -775,10 +652,10 @@ int main()
                 }
                 case DeleteM:
                 {
-                    WINDOW *changeN = newwin(LINES,COLS,0,0);
-                    box(changeN,0,0);
-                    mvwprintw(changeN,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΈΛΟΥΣ");
-                    mvwprintw(changeN,4,1,"Κωδικός/ΑΜ για Διαγραφή: ");
+                    WINDOW *deleteM = newwin(LINES,COLS,0,0);
+                    box(deleteM,0,0);
+                    mvwprintw(deleteM,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΈΛΟΥΣ");
+                    mvwprintw(deleteM,4,1,"Κωδικός/ΑΜ για Διαγραφή: ");
 
                     bool validcode;
 
@@ -786,7 +663,7 @@ int main()
                     {
                         validcode = false;
 
-                        mvwprintw(changeN, 4, 30, "                    "); 
+                        mvwprintw(deleteM, 4, 30, "                    "); 
 
 
                         vector <Person *> &search3 = record.GetMembers();
@@ -794,7 +671,7 @@ int main()
                         echo();
                         char input[100];
 
-                        mvwgetnstr(changeN, 4, 30, input, 99);
+                        mvwgetnstr(deleteM, 4, 30, input, 99);
                         for (int i=0; i < search3.size();i ++)
                         {
                             if (Student *maybe = dynamic_cast<Student *>(search3[i]))
@@ -819,9 +696,9 @@ int main()
                     } 
                     while (validcode == false);
 
-                    wrefresh (changeN);
+                    wrefresh (deleteM);
 
-                    delwin(changeN);
+                    delwin(deleteM);
                     noecho();
                     touchwin(menuwin);
                     wrefresh(menuwin);
@@ -830,10 +707,10 @@ int main()
                 }
                 case DeleteSub:
                 {
-                    WINDOW *changeD = newwin(LINES,COLS,0,0);
-                    box(changeD,0,0);
-                    mvwprintw(changeD,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΑΘΉΜΑΤΟΣ");
-                    mvwprintw(changeD,4,1,"Κωδικός για Διαγραφή: ");
+                    WINDOW *deleteS = newwin(LINES,COLS,0,0);
+                    box(deleteS,0,0);
+                    mvwprintw(deleteS,1,COLS/2-5,"ΔΙΑΓΡΑΦΉ ΜΑΘΉΜΑΤΟΣ");
+                    mvwprintw(deleteS,4,1,"Κωδικός για Διαγραφή: ");
 
                     bool validcode;
 
@@ -841,7 +718,7 @@ int main()
                     {
                         validcode = false;
 
-                        mvwprintw(changeD, 4, 27, "                    "); 
+                        mvwprintw(deleteS, 4, 27, "                    "); 
 
                         list <Subject> :: iterator l;
                         list <Subject> &forchange = record.GetSubjects();
@@ -849,7 +726,7 @@ int main()
                         echo();
                         char input[100];
 
-                        mvwgetnstr(changeD, 4, 27, input, 99);
+                        mvwgetnstr(deleteS, 4, 27, input, 99);
 
                         for (l = forchange.begin() ; l != forchange.end(); l++)
                         {
@@ -863,9 +740,9 @@ int main()
                     } 
                     while (validcode == false);
 
-                    wrefresh (changeD);
+                    wrefresh (deleteS);
 
-                    delwin(changeD);
+                    delwin(deleteS);
                     noecho();
                     touchwin(menuwin);
                     wrefresh(menuwin);
